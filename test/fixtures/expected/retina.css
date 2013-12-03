@@ -1,0 +1,8 @@
+.hello {
+  color: #f00;
+}
+@media (min-resolution: 1.5dppx), (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+  .hello {
+    color: #00f;
+  }
+}

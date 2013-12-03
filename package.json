@@ -1,0 +1,23 @@
+{
+  "name": "rupture",
+  "author": "Jeff Escalante <hello@jenius.me>",
+  "description": "simple media queries for stylus",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jenius/rupture.git"
+  },
+  "devDependencies": {
+    "stylus": "*",
+    "mocha": "*",
+    "should": "*",
+    "coffee-script": "*"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}

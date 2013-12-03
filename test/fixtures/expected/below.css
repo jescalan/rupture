@@ -1,0 +1,8 @@
+.hello {
+  color: #f00;
+}
+@media only screen and (max-width: 500px) {
+  .hello {
+    color: #00f;
+  }
+}
