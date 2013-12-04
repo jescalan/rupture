@@ -6,3 +6,23 @@
     color: #00f;
   }
 }
+@media only screen and (min-width: 400px) and (max-width: 1050px) {
+  .hello {
+    color: #fff;
+  }
+}
+@media only screen and (min-width: 400px) and (max-width: 600px) {
+  .hello {
+    color: #000;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .hello {
+    color: #eee;
+  }
+}
+@media only screen and (min-width: 200px) {
+  .hello {
+    color: #ccc;
+  }
+}
