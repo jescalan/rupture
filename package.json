@@ -11,7 +11,8 @@
     "stylus": "*",
     "mocha": "*",
     "should": "*",
-    "coffee-script": "*"
+    "coffee-script": "*",
+    "css-parse": "*"
   },
   "main": "index.js",
   "scripts": {

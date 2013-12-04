@@ -2,6 +2,7 @@ should = require 'should'
 path = require 'path'
 fs = require 'fs'
 stylus = require 'stylus'
+parse = require 'css-parse'
 rupture = require '../'
 test_path = path.join(__dirname, 'fixtures')
 
@@ -11,7 +12,7 @@ match_expected = (file, done) ->
     .render (err, css) ->
       if err then return done(err)
       expected = fs.readFileSync(path.join(test_path, 'expected', file.replace('.styl', '.css')), 'utf8')
-      css.should.eql(expected)
+      parse(css).should.eql(parse(expected))
       done()
 
 describe 'basic', ->
