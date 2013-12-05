@@ -20,6 +20,7 @@ scale = 0 mobile-cutoff 600px 800px desktop-cutoff
 //   - +between(0, 300px) 0 width:custom
 //   - +between(1, 300px) scale:custom
 //   - +between(200px, 4) custom:scale
+
 between(min, max)
   if (-on-scale(min)) and (-on-scale(max))
     -min = -is-zero(min) ? 0 : scale[min - 1]
@@ -59,7 +60,7 @@ to(scale-point)
 below = to
 
 mobile()
-  +to(mobile-cutoff)
+  +below(mobile-cutoff)
     {block}
 
 tablet()
@@ -67,7 +68,7 @@ tablet()
     {block}
 
 desktop()
-  +from(desktop-cutoff)
+  +above(desktop-cutoff)
     {block}
 
 retina()
