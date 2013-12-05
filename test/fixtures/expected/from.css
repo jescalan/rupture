@@ -1,7 +1,7 @@
 .hello {
   color: #f00;
 }
-@media only screen and (min-width: 1050px) {
+@media only screen and (min-width: 400px) {
   .hello {
     color: #00f;
   }

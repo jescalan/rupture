@@ -17,14 +17,23 @@ match_expected = (file, done) ->
 
 describe 'basic', ->
 
+  it 'between', (done) ->
+    match_expected('between.styl', done)
+
+  it 'at', (done) ->
+    match_expected('at.styl', done)
+
+  it 'from', (done) ->
+    match_expected('from.styl', done)
+
+  it 'to', (done) ->
+    match_expected('to.styl', done)
+
   it 'above', (done) ->
     match_expected('above.styl', done)
 
   it 'below', (done) ->
     match_expected('below.styl', done)
-
-  it 'between', (done) ->
-    match_expected('between.styl', done)
 
   it 'mobile', (done) ->
     match_expected('mobile.styl', done)
