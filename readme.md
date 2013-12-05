@@ -19,6 +19,32 @@ Installation
 
 `npm install rupture`
 
+API Documentation
+-----------------
+
+The first version of this library is very simple, just providing smooth abbreviations for common breakpoints. All of the functions provided by rupture are [block mixins](http://learnboost.github.io/stylus/docs/mixins.html#block-mixins), which means that they must be called with a `+` prefix and a block of stylus should be nested inside them.
+
+**`+above(min-width)`**    
+When the screen size is _above_ the provided measure (pixels, ems, etc), the styles in the block will take effect.
+
+**`+below(max-width)`**    
+When the screen size is _below_ the provided measure, the styles in the block will take effect.
+
+**`+between(min-width, max-width)`**    
+When the screen size is _between_ the two provided measures, the styles in the block will take effect.
+
+**`+mobile`**    
+When the screen size is 400px or less, the styles in the block will take effect.
+
+**`+tablet`**    
+When the screen size is between 1024px and 400px, the styles in the block will take effect.
+
+**`+desktop`**    
+When the screen size is 1024px or more, the styles in the block will take effect.
+
+**`+retina`**    
+When the device has a pixel density of over 1.5 (retina), the styles in the block will take effect.
+
 Usage
 -----
 
@@ -74,32 +100,6 @@ Also, rupture automatically loads its mixins into all stylus files by default. I
 ```js
 .use(rupture({ implicit: false }))
 ```
-
-API Documentation
------------------
-
-The first version of this library is very simple, just providing smooth abbreviations for common breakpoints. All of the functions provided by rupture are [block mixins](http://learnboost.github.io/stylus/docs/mixins.html#block-mixins), which means that they must be called with a `+` prefix and a block of stylus should be nested inside them.
-
-**`+above(min-width)`**    
-When the screen size is _above_ the provided measure (pixels, ems, etc), the styles in the block will take effect.
-
-**`+below(max-width)`**    
-When the screen size is _below_ the provided measure, the styles in the block will take effect.
-
-**`+between(min-width, max-width)`**    
-When the screen size is _between_ the two provided measures, the styles in the block will take effect.
-
-**`+mobile`**    
-When the screen size is 400px or less, the styles in the block will take effect.
-
-**`+tablet`**    
-When the screen size is between 1024px and 400px, the styles in the block will take effect.
-
-**`+desktop`**    
-When the screen size is 1024px or more, the styles in the block will take effect.
-
-**`+retina`**    
-When the device has a pixel density of over 1.5 (retina), the styles in the block will take effect.
 
 Miscellaneous
 -------------
