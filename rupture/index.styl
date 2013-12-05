@@ -1,14 +1,13 @@
 mobile-cutoff = 400px
-desktop-cutoff = 1024px
+desktop-cutoff = 1050px
 
-scale = 0 400px 600px 800px 1050px
-scale-length = length(scale)
+scale = 0 mobile-cutoff 600px 800px desktop-cutoff
 
 -on-scale(n)
   return unit(n) is ''
 
 -larger-than-scale(n)
-  return (n > (scale-length - 1)) and -on-scale(n)
+  return (n > (length(scale) - 1)) and -on-scale(n)
 
 -is-zero(n)
   return n is 0
@@ -48,13 +47,15 @@ at(scale-point)
     {block}
 
 from(scale-point)
-  +between(scale-point, scale-length)
+  +between(scale-point, length(scale))
     {block}
+
 above = from
 
 to(scale-point)
   +between(1, scale-point)
     {block}
+
 below = to
 
 mobile()
