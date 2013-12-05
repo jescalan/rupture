@@ -151,7 +151,3 @@ Licensed under MIT, [see license &raquo;](license.md)
 ### Contributing
 
 See the [contributing guide &raquo;](contributing.md)
-
-### Future
-
-I would very much like to build in syntax support like [breakpoint slicer](https://github.com/lolmaus/breakpoint-slicer) in the future.
