@@ -1,0 +1,46 @@
+<!DOCTYPE html><html><head><meta charset="utf8"><meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1"><meta name="description" content="description of your site"><meta name="author" content="author of the site"><title>Rupture: Media Queries with Stylus</title><link rel="stylesheet" href="css/tomorrow-night.css"><link rel="stylesheet" href="css/master.css"><script src="//use.typekit.net/ddj0mjr.js"></script><script>try{Typekit.load();}catch(e){}</script></head><body><header><div class="contain"><img src="img/logo.svg"><h1>rupture</h1></div></header><nav><a href="#installation">installation</a><span>&bull;</span><a href="#documentation">documentation</a><span>&bull;</span><a href="#help">help</a><span>&bull;</span><a href="https://github.com/jenius/rupture">github</a></nav><div class="wrapper"><p>Rupture is a utility for working with media queries in <a href="https://github.com/LearnBoost/stylus">stylus</a>. It takes advantage of stylus&#39; new block mixins to provide useful helpers that make breakpoints much more clear to read and simple to code. Rupture is based loosely on <a href="https://github.com/lolmaus/breakpoint-slicer">breakpoint-slicer</a>, a sass plugin with similar functionality.</p>
+<h2 id="installation">Installation</h2><p>You can install use rupture through npm, as such:</p>
+<pre><code>npm install rupture
+</code></pre><p>...and you can use it in any way that <a href="https://gist.github.com/jenius/8263065">stylus plugins are normally used</a>. An example is shown below with <a href="https://github.com/jenius/accord">accord</a>, a simple interface to many different compiled js languages.</p>
+<pre><code class="lang-js">var accord = require(&#39;accord&#39;),
+    stylus = accord.load(&#39;stylus&#39;),
+    rupture = require(&#39;rupture&#39;);
+
+stylus.renderFile(&#39;example.styl&#39;, { use: rupture() })
+  .done(console.log.bind(console), console.error.bind(console))
+</code></pre>
+<h2 id="documentation">Documentation</h2><p>All functions provided by rupture are <a href="http://learnboost.github.io/stylus/docs/mixins.html#block-mixins">block mixins</a>, meaning that they should be called prefixed with a <code>+</code>. You can use any of the mixins either with pixel/em values or with scale values. Let&#39;s review the scale first so that it&#39;s easy to understand.</p>
+<h3 id="scale">The Scale</h3><p>Rupture provides a variable called <code>scale</code>. Below is the default value, but you are welcome to overwrite this with anything else you want:</p>
+<pre><code class="lang-js">scale = 0 400px 600px 800px 1050px
+</code></pre>
+<p>The <code>scale</code> variables can also have as many values as you&#39;d like, so don&#39;t feel limited to the number in the default value. Now, imagine that the variables listed here represent a scale on your site, with each slice having a number, as such:</p>
+<pre><code class="lang-js"> Breakpoint:          0            400px     600px      800px      1050px
+            ├───────────────────┼─────────┼─────────┼───────────┼─────────&gt;
+ Slice #:             0              1         2          3          4
+</code></pre>
+<p>As mentioned above, you can have as many slices as you want, they just count up from the first one at index zero. So that&#39;s the scale. Now let&#39;s move on to the mixins.</p>
+<h3 id="mixins">The Mixins</h3><p>So there are two &ldquo;categories&rdquo; of mixins that are a part of rupture. The first is a very basic set designed to simply shorten and sweeten standard media queries, and the second is a very close port of the fantastic <a href="https://github.com/lolmaus/breakpoint-slicer">breakpoint-slicer</a> library, which can be used almost as a grid. We&#39;ll go through these in order.</p>
+<h5 id="-above-measure-"><code>+above(measure)</code></h5>
+<p>When the screen size is <em>above</em> the provided <a href="#measure">measure</a>, the styles in the block will take effect.</p>
+<h5 id="-from-measure-"><code>+from(measure)</code></h5>
+<p>Alias of <code>above</code>. Styles take effect from the provided <a href="#measure">measure</a> and above.</p>
+<h5 id="-below-measure-"><code>+below(measure)</code></h5>
+<p>When the screen size is <em>below</em> the provided <a href="#measure">measure</a>, the styles in the block will take effect.</p>
+<h5 id="-to-measure-"><code>+to(measure)</code></h5>
+<p>Alias of <code>below</code>. Styles take effect from zero up to the provided <a href="#measure">measure</a>.</p>
+<h5 id="-between-measure-measure-"><code>+between(measure, measure)</code></h5>
+<p>When the screen size is <em>between</em> the two provided <a href="#measure">measure</a>, the styles in the block will take effect.</p>
+<h5 id="-at-measure-"><code>+at(measure)</code></h5>
+<p>Intended for use with scale measures, when the screen size is between the provided scale <a href="#measure">measure</a> and the one below it, the styles in the block will take effect. For example, if your scale was something like <code>scale = 0 400px 600px</code>, and you used the mixin like <code>+at(2)</code>, it would kick in between 400 and 600px (remember, scale is zero indexed, so 2 is the third value, and one less is the second). If you use this with a value, it will not have much effect, as it will be at one specific pixel value rather than a range like you want.</p>
+<h5 id="-mobile-"><code>+mobile()</code></h5>
+<p>When the screen size is 400px (defined by <code>mobile-cutoff</code>) or less, the styles in the block will take effect.</p>
+<h5 id="-tablet-"><code>+tablet()</code></h5>
+<p>When the screen size is between 1050px (defined by <code>desktop-cutoff</code>) and 400px (defined by <code>mobile-cutoff</code>), the styles in the block will take effect.</p>
+<h5 id="-desktop-"><code>+desktop()</code></h5>
+<p>When the screen size is 1050px (defined by <code>desktop-cutoff</code>) or more, the styles in the block will take effect.</p>
+<h5 id="-retina-"><code>+retina()</code></h5>
+<p>When the device has a pixel density of over 1.5 (retina), the styles in the block will take effect.</p>
+<h3 id="measure">What is a &lsquo;Measure&rsquo;?</h3><p>When I say &ldquo;measure&rdquo; in any of the docs above, this could mean either pixels (like <code>500px</code>), ems (like <code>20em</code>), or an index on the <code>scale</code> (like <code>2</code>). Scale indices will be converted from the index to whatever the value is at that index in the <code>scale</code> variable. The scale starts at a zero-index.</p>
+<h2 id="help">Help</h2><p>If you need help with rupture, feel free to <a href="http://twitter.com/jescalan">ask me on twitter</a>. If you think you have found a problem with rupture or have an idea for a new feature, please <a href="https://github.com/jenius/rupture">file an issue on github</a>.</p>
+<p>Othwerwise, enjoy!</p>
+</div></body><script data-main="js/main" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js"></script><script src="js/highlight.min.js"></script><script>hljs.initHighlightingOnLoad()</script></html>
