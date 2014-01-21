@@ -213,7 +213,7 @@ footer a {
   font: 0/0 a;
   text-shadow: none;
   color: transparent;
-  background: url("/img/built-at-carrot.svg") no-repeat;
+  background: url("../img/built-at-carrot.svg") no-repeat;
   width: 109px;
   height: 36px;
   margin: 50px auto;
