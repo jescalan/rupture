@@ -207,3 +207,23 @@ nav a:last-child {
 .hljs {
   background: none;
 }
+
+footer a {
+  display: block;
+  font: 0/0 a;
+  text-shadow: none;
+  color: transparent;
+  background: url("/img/built-at-carrot.svg") no-repeat;
+  width: 109px;
+  height: 36px;
+  margin: 50px auto;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=60);
+  opacity: 0.6;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+footer a:hover {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
