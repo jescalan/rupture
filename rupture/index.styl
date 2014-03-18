@@ -12,6 +12,14 @@ scale = 0 mobile-cutoff 600px 800px desktop-cutoff
 -is-zero(n)
   return n is 0
 
+// override display property with mixin so that "block" keyword works again
+// fixes maximum call stack error when dealing with display: block
+display()
+  if arguments[0] is 'block'
+    display: unquote('block')
+  else
+    display: arguments
+
 // +between(min, max)
 // usage (scale can be mixed with custom values):
 //   - +between(1, 3) scale:scale
