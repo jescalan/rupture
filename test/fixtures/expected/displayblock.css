@@ -1,0 +1,8 @@
+.selector {
+  color: #00f;
+}
+@media only screen and (max-width: 480px) {
+  .selector {
+    display: block;
+  }
+}
