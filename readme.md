@@ -1,8 +1,8 @@
 Rupture
 -------
 
-[![npm](https://badge.fury.io/js/rupture.png)](http://badge.fury.io/js/rupture)
-[![tests](https://travis-ci.org/jenius/rupture.png?branch=master)](https://travis-ci.org/jenius/rupture)
+[![npm](http://img.shields.io/npm/v/rupture.svg?style=flat)](http://badge.fury.io/js/rupture)
+[![tests](http://img.shields.io/travis/jenius/rupture/master.svg?style=flat)](https://travis-ci.org/jenius/rupture)
 
 Simple media queries for stylus.
 
