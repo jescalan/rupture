@@ -12,14 +12,6 @@ scale = 0 mobile-cutoff 600px 800px desktop-cutoff
 -is-zero(n)
   return n is 0
 
-// override display property with mixin so that "block" keyword works again
-// fixes maximum call stack error when dealing with display: block
-display()
-  if arguments[0] is 'block'
-    display: unquote('block')
-  else
-    display: arguments
-
 // +between(min, max)
 // usage (scale can be mixed with custom values):
 //   - +between(1, 3) scale:scale
@@ -49,36 +41,36 @@ between(min, max)
   unless -larger-than-scale(max)
     condition = condition + ' and (max-width: %s)' % (-max)
   @media condition
-    {block}
+    {block} // `{block}` variant to ensure CSS selector is present
 
 at(scale-point)
   +between(scale-point, scale-point)
-    {block}
+    block // `block` variant to ensure `display: block` is compatible
 
 from(scale-point)
   +between(scale-point, length(scale))
-    {block}
+    block // `block` variant to ensure `display: block` is compatible
 
 above = from
 
 to(scale-point)
   +between(1, scale-point)
-    {block}
+    block // `block` variant to ensure `display: block` is compatible
 
 below = to
 
 mobile()
   +below(mobile-cutoff)
-    {block}
+    block // `block` variant to ensure `display: block` is compatible
 
 tablet()
   +between(mobile-cutoff, desktop-cutoff)
-    {block}
+    block // `block` variant to ensure `display: block` is compatible
 
 desktop()
   +above(desktop-cutoff)
-    {block}
+    block // `block` variant to ensure `display: block` is compatible
 
 retina()
   @media (min-resolution: 1.5dppx), (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (min-resolution: 144dpi)
-    {block}
+    {block} // `{block}` variant to ensure CSS selector is present
