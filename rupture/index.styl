@@ -1,7 +1,11 @@
-mobile-cutoff = 400px
-desktop-cutoff = 1050px
+mobile-cutoff         ?= 400px
+desktop-cutoff        ?= 1050px
+enable-em-breakpoints ?= false
+base-font-size        ?= 16px
+scale                 ?= 0 mobile-cutoff 600px 800px desktop-cutoff
 
-scale = 0 mobile-cutoff 600px 800px desktop-cutoff
+-convert-to-ems(target, context = base-font-size)
+  return unit((target / context), 'em')
 
 -on-scale(n)
   return unit(n) is ''
@@ -35,10 +39,12 @@ between(min, max)
     -min = min
     -max = max
   if -min is not 0
+    -min = -convert-to-ems(-min) if enable-em-breakpoints
     condition = 'only screen and (min-width: %s)' % (-min)
   else
     condition = 'only screen'
   unless -larger-than-scale(max)
+    -max = -convert-to-ems(-max) if enable-em-breakpoints
     condition = condition + ' and (max-width: %s)' % (-max)
   @media condition
     {block} // `{block}` variant to ensure CSS selector is present

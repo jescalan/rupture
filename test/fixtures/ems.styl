@@ -1,0 +1,24 @@
+enable-em-breakpoints = true
+
+.thing
+  color: red
+  +below(480px)
+    display: block
+  +above(480px)
+    display: block
+  +from(500px)
+    display: block
+  +to(500px)
+    display: block
+  +between(200px, 600px)
+    display: block
+  +at(2)
+    display: block
+  +mobile()
+    display: block
+  +tablet()
+    display: block
+  +desktop()
+    display: block
+  +retina()
+    display: block
