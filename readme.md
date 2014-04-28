@@ -77,6 +77,45 @@ When the screen size is 1050px (defined by `desktop-cutoff`) or more, the styles
 ##### `+retina()`
 When the device has a pixel density of over 1.5 (retina), the styles in the block will take effect.
 
+### PX to EM unit conversion
+
+It is a popular opinion that using `em` units for media queries is a good practice, and [for good reason](http://blog.cloudfour.com/the-ems-have-it-proportional-media-queries-ftw/).
+
+Rupture allows you to automatically convert all your breakpoint units from `px` to `em`.
+
+All you need to do to enable this behavior is to define an optional `base-font-size` (unless already defined) and set `enable-em-breakpoints` to `true`.
+
+`base-font-size` defaults to `16px`.
+
+Example:
+
+```
+// base-font-size = 18px (commented out because it's optional and we want 16px)
+enable-em-breakpoints = true
+
+.some-ui-element
+  width: 50%
+  float: left
+  +below(500px)
+    width: 100%
+    float: none
+
+/**
+ * compiles to:
+ *
+ * .some-ui-element {
+ *   width: 50%;
+ *   float: left;
+ * }
+ * @media screen and (max-width: 31.25em) {
+ *   .some-ui-element {
+ *     width: 100%;
+ *     float: none;
+ *   }
+ * }
+ */
+```
+
 ### What is a "measure"?
 
 When I say "measure" in any of the docs above, this could mean either pixels (like `500px`), ems (like `20em`), or an index on the `scale` (like `2`). Scale indices will be converted from the index to whatever the value is at that index in the `scale` variable. The scale starts at a zero-index.
@@ -110,7 +149,7 @@ Finally, you might want to use it with [express](http://expressjs.com):
 var express = require('express'),
     stylus = require('stylus'),
     rupture = require('rupture');
- 
+
 ... etc ...
 
 app.configure(function () {
