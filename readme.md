@@ -134,7 +134,7 @@ enable-em-breakpoints = true
 ```
 
 ### Scale overlap
-You can prevent scale from overlaping with neighbouring scale by setting [`enable-anti-overlap`][#enable-anti-overlap] variable to true 
+You can prevent scale from overlapping with neighbouring scale by setting [`enable-anti-overlap`][#enable-anti-overlap] variable to true 
 
 Overlap can be controlled by [`anti-overlap` variable](#anti-overlap).
 
