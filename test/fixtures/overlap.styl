@@ -1,0 +1,105 @@
+scale = 0 10em 20em 800px 1050px
+enable-anti-overlap = true
+enable-em-breakpoints = true
+anti-overlap = 1px 0.001em 0.001rem
+
+.overlap-plus-em
+  text-align center
+  +at(2)
+    text-align right
+  +at(3)
+    text-align left
+    
+anti-overlap = -1px -0.001em -0.001rem
+
+.overlap-minus-em
+  text-align center
+  +at(2)
+    text-align right
+  +at(3)
+    text-align left
+
+anti-overlap = 1px .001em .001rem
+scale = 0 10rem 20rem 800px 1050px
+
+.overlap-plus-rem
+  text-align center
+  +at(2)
+    text-align right
+  +at(3)
+    text-align left
+    
+anti-overlap = -1px -.001em -.001rem
+.overlap-minus-rem
+  text-align center
+  +at(2)
+    text-align right
+  +at(3)
+    text-align left
+    
+anti-overlap = 1px .001em .001rem
+enable-em-breakpoints = false
+scale = 0 100px 200px 800px 1050px
+.overlap-plus-px
+  text-align center
+  +at(2)
+    text-align right
+  +at(3)
+    text-align left
+    
+anti-overlap = -1px -.001em -.001rem
+.overlap-minus-px
+  text-align center
+  +at(2)
+    text-align right
+  +at(3)
+    text-align left
+
+mobile-cutoff = 400px
+desktop-cutoff = 1050px
+scale = 0 mobile-cutoff 600px 800px desktop-cutoff
+anti-overlap = 1px
+enable-anti-overlap = false
+enable-em-breakpoints = false
+
+.overlap-force 
+  text-align center
+  +at(2, true)
+    text-align right
+  +at(3, true)
+    text-align left
+  +from(4, true, true)
+    text-align justify
+  +to(4, true, true)
+    border 1px
+    content 'we are going max-width, and overlap is positive, so wont change'
+  +from(5, true, true)
+    text-align justify
+  +tablet(true)
+    font-weight bold
+  +mobile(true)
+    font-weight normal
+  +desktop(true)
+    font-style italic
+    
+enable-em-breakpoints = true
+
+.overlap-force-em
+  text-align center
+  +at(2, true)
+    text-align right
+  +at(3, true)
+    text-align left
+  +from(4, true, true)
+    text-align justify
+  +to(4, true, true)
+    border 1px
+    content 'we are going max-width, and overlap is positive, so wont change'
+  +from(5, true, true)
+    text-align justify
+  +tablet(true)
+    font-weight bold
+  +mobile(true)
+    font-weight normal
+  +desktop(true)
+    font-style italic

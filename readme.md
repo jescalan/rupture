@@ -42,7 +42,48 @@ A list of values that you can reference by index in most of the mixins listed be
 ```js
 scale = 0 400px 600px 800px 1050px
 ```
+##### `anti-overlap`
 
+List of values that controls [anti-overlapping behavior](#scale-overlap).
+Works for `px`, `em`, `rem`, also can be negative.
+Default looks like this:
+
+```js
+anti-overlap = 1px .0625em .0625rem // this values will always be a fallback if no suitable value found
+```
+
+##### `enable-anti-overlap`
+Variable that toggles [anti-overlapping feature](#scale-overlap) of mixins.
+Default looks like this:
+
+```js
+enable-anti-overlap = false
+```
+
+If you don't want to enable it globally you can force it locally by passing additional truthful  argument to all `mixins` but `retina()`
+
+like so:
+
+```
+.overlap-force
+  text-align center
+  +at(2, true)
+    text-align right
+  +at(3, true)
+    text-align left
+  +from(4, true, true)
+    text-align justify
+  +to(4, true, true)
+    border 1px
+  +from(5, true, true)
+    text-align justify
+  +tablet(true)
+    font-weight bold
+  +mobile(true)
+    font-weight normal
+  +desktop(true)
+    font-style italic
+```
 ### Mixins
 
 So there are two "categories" of mixins that are a part of rupture. The first is a very basic set designed to simply shorten and sweeten standard media queries, and the second is a very close port of the fantastic [breakpoint-slicer](https://github.com/lolmaus/breakpoint-slicer) library, which can be used almost as a grid. We'll go through these in order.
@@ -115,6 +156,79 @@ enable-em-breakpoints = true
  * }
  */
 ```
+
+### Scale overlap
+You can prevent scale from overlapping with neighbouring scale by setting [`enable-anti-overlap`][#enable-anti-overlap] variable to true 
+
+Overlap can be controlled by [`anti-overlap` variable](#anti-overlap).
+
+Rapture will find from [`anti-overlap` variable](#anti-overlap) list - suitable value by comparing condition and value units.
+
+If it is negative - we are adding its value to max-width, otherwise to min-width.
+
+example positive:
+
+```
+  scale = 0 10em 20em 800px 1050px
+  enable-anti-overlap = true
+  enable-em-breakpoints = true
+  anti-overlap = 1px 0.001em 0.001rem
+  
+  .overlap-plus-em
+    text-align center
+    +at(2)
+      text-align right
+    +at(3)
+      text-align left
+      
+/**
+  * compiles to:
+  * .overlap-plus-em {
+  *     text-align:center;
+  * }
+  * @media only screen and (min-width: 10.001em) and (max-width: 20em) {
+  *     .overlap-plus-em {
+  *         text-align:right;
+  *     }
+  * }
+  * @media only screen and (min-width: 20.001em) and (max-width: 50em) {
+  *    .overlap-plus-em {
+  *         text-align:left;
+  *     }
+  * }
+  */
+```
+
+example negative:
+
+```
+anti-overlap = -1px -0.001em -0.001rem
+
+.overlap-minus-em
+  text-align center
+  +at(2)
+    text-align right
+  +at(3)
+    text-align left
+/**
+ * compiles to:
+ * .overlap-minus-em {
+ *     text-align:center;
+ * }
+ * @media only screen and (min-width: 10em) and (max-width: 19.999em) {
+ *     .overlap-minus-em {
+ *         text-align:right;
+ *     }
+ * }
+ * @media only screen and (min-width: 20em) and (max-width: 49.9375em) {
+ *     .overlap-minus-em {
+ *         text-align:left;
+ *     }
+ * }
+*/
+```
+
+You can check more examples in [`tests/overlap.styl`](test/fixtures/overlap.styl)
 
 ### What is a "measure"?
 
