@@ -60,6 +60,30 @@ Default looks like this:
 enable-anti-overlap = false
 ```
 
+If you don't want to enable it globally you can force it locally by passing additional truthful  argument to all `mixins` but `retina()`
+
+like so:
+
+```
+.overlap-force
+  text-align center
+  +at(2, true)
+    text-align right
+  +at(3, true)
+    text-align left
+  +from(4, true, true)
+    text-align justify
+  +to(4, true, true)
+    border 1px
+  +from(5, true, true)
+    text-align justify
+  +tablet(true)
+    font-weight bold
+  +mobile(true)
+    font-weight normal
+  +desktop(true)
+    font-style italic
+```
 ### Mixins
 
 So there are two "categories" of mixins that are a part of rupture. The first is a very basic set designed to simply shorten and sweeten standard media queries, and the second is a very close port of the fantastic [breakpoint-slicer](https://github.com/lolmaus/breakpoint-slicer) library, which can be used almost as a grid. We'll go through these in order.

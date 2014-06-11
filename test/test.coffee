@@ -53,5 +53,5 @@ describe 'basic', ->
   it 'supports em-based media queries', (done) ->
     match_expected('ems.styl', done)
 
-  it 'adds anti-overlap correction to prevent overlaping media queries', (done) ->
+  it 'adds anti-overlap correction to prevent overlapping media queries', (done) ->
     match_expected('overlap.styl', done)
