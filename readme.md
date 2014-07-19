@@ -28,19 +28,19 @@ Before getting started, I would recommend [reading this](https://github.com/lolm
 
 ### Variables
 
-A few variables are exposed that can be customized, each of them are listed below:
+A few variables are exposed that can be customized, each of them are listed below. All of these variables are scoped under `rupture` so that there are no conflicts with css keywords or other libraries.
 
-##### `mobile-cutoff`
+##### `rupture.mobile-cutoff`
 Pixel value where the `mobile` mixin kicks in, also the lower bound of the `tablet` mixin.
 
-##### `desktop-cutoff`
+##### `rupture.desktop-cutoff`
 Pixel value where the `desktop` mixin kicks in, also the upper bound of the `tablet` mixin.
 
-##### `scale`
+##### `rupture.scale`
 A list of values that you can reference by index in most of the mixins listed below. This works exactly like [breakpoint-slicer](https://github.com/lolmaus/breakpoint-slicer). Default looks like this:
 
 ```js
-scale = 0 400px 600px 800px 1050px
+rupture.scale = 0 400px 600px 800px 1050px
 ```
 
 ### Mixins
@@ -63,16 +63,16 @@ Alias of `below`. Styles take effect from zero up to the provided [measure](#wha
 When the screen size is _between_ the two provided [measure](#what-is-a-measure), the styles in the block will take effect.
 
 ##### `+at(measure)`
-Intended for use with scale measures, when the screen size is between the provided scale [measure](#what-is-a-measure) and the one below it, the styles in the block will take effect. For example, if your scale was something like `scale = 0 400px 600px`, and you used the mixin like `+at(2)`, it would kick in between 400 and 600px (remember, scale is zero indexed, so 2 is the third value, and one less is the second). If you use this with a value, it will not have much effect, as it will be at one specific pixel value rather than a range like you want.
+Intended for use with scale measures, when the screen size is between the provided scale [measure](#what-is-a-measure) and the one below it, the styles in the block will take effect. For example, if your scale was something like `rupture.scale = 0 400px 600px`, and you used the mixin like `+at(2)`, it would kick in between 400 and 600px (remember, scale is zero indexed, so 2 is the third value, and one less is the second). If you use this with a value, it will not have much effect, as it will be at one specific pixel value rather than a range like you want.
 
 ##### `+mobile()`
-When the screen size is 400px (defined by `mobile-cutoff`) or less, the styles in the block will take effect.
+When the screen size is 400px (defined by `rupture.mobile-cutoff`) or less, the styles in the block will take effect.
 
 ##### `+tablet()`
-When the screen size is between 1050px (defined by `desktop-cutoff`) and 400px (defined by `mobile-cutoff`), the styles in the block will take effect.
+When the screen size is between 1050px (defined by `rupture.desktop-cutoff`) and 400px (defined by `mobile-cutoff`), the styles in the block will take effect.
 
 ##### `+desktop()`
-When the screen size is 1050px (defined by `desktop-cutoff`) or more, the styles in the block will take effect.
+When the screen size is 1050px (defined by `rupture.desktop-cutoff`) or more, the styles in the block will take effect.
 
 ##### `+retina()`
 When the device has a pixel density of over 1.5 (retina), the styles in the block will take effect.
@@ -83,15 +83,15 @@ It is a popular opinion that using `em` units for media queries is a good practi
 
 Rupture allows you to automatically convert all your breakpoint units from `px` to `em`.
 
-All you need to do to enable this behavior is to define an optional `base-font-size` (unless already defined) and set `enable-em-breakpoints` to `true`.
+All you need to do to enable this behavior is to define an optional `rupture.base-font-size` (unless already defined) and set `rupture.enable-em-breakpoints` to `true`.
 
-`base-font-size` defaults to `16px`.
+`rupture.base-font-size` defaults to `16px`.
 
 Example:
 
 ```
 // base-font-size = 18px (commented out because it's optional and we want 16px)
-enable-em-breakpoints = true
+rupture.enable-em-breakpoints = true
 
 .some-ui-element
   width: 50%
