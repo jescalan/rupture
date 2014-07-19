@@ -28,7 +28,7 @@ Before getting started, I would recommend [reading this](https://github.com/lolm
 
 ### Variables
 
-A few variables are exposed that can be customized, each of them are listed below:
+A few variables are exposed that can be customized, each of them are listed below. All of these variables are scoped under the global `rupture`, so for example could be accessed directly in your stylesheets as `rupture.scale`, etc.
 
 ##### `mobile-cutoff`
 Pixel value where the `mobile` mixin kicks in, also the lower bound of the `tablet` mixin.
@@ -40,7 +40,7 @@ Pixel value where the `desktop` mixin kicks in, also the upper bound of the `tab
 A list of values that you can reference by index in most of the mixins listed below. This works exactly like [breakpoint-slicer](https://github.com/lolmaus/breakpoint-slicer). Default looks like this:
 
 ```js
-scale = 0 400px 600px 800px 1050px
+rupture.scale = 0 400px 600px 800px 1050px
 ```
 
 ### Mixins
