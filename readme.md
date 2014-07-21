@@ -181,7 +181,7 @@ Miscellaneous
 
 ### Compatibility
 
-Rupture is only compatible with stylus version `0.41.0` and up. If things are totally broken, check your stylus version and make sure you are up to date!
+Rupture is only compatible with stylus version `0.41.0` and up. If things are totally broken, check your stylus version and make sure you are up to date! This is especially true if you are experiencing errors with `display: block` - this is due to a bug in older versions of Stylus, and the only fix that isn't an ugly hack is to update to the latest version of Stylus.
 
 ### License
 

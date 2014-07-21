@@ -47,8 +47,5 @@ describe 'basic', ->
   it 'retina', (done) ->
     match_expected('retina.styl', done)
 
-  it 'works with display: block', (done) ->
-    match_expected('displayblock.styl', done)
-
   it 'supports em-based media queries', (done) ->
     match_expected('ems.styl', done)
