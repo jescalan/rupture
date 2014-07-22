@@ -1,37 +1,44 @@
-mobile-cutoff         ?= 400px
-desktop-cutoff        ?= 1050px
-enable-em-breakpoints ?= false
-base-font-size        ?= 16px
-scale                 ?= 0 mobile-cutoff 600px 800px desktop-cutoff
-enable-anti-overlap   ?= false
-anti-overlap          ?= 1px .0625em .0625rem
+base-font-size ?= 16px
 
--convert-to-ems(target, context = base-font-size)
-  -targetUnit = unit(target)
-  if -targetUnit  is 'em' or -targetUnit is 'rem'
-    return target
-  return unit((target / context), 'em')
+rupture = {
+  mobile-cutoff: 400px
+  desktop-cutoff: 1050px
+  enable-em-breakpoints: false
+  base-font-size: base-font-size
+  anti-overlap: false
+}
+
+rupture.scale = 0 (rupture.mobile-cutoff) 600px 800px (rupture.desktop-cutoff)
+
+-convert-to(to-unit, value, context = rupture.base-font-size)
+  from-unit = unit(value)
+  return value if to-unit is from-unit
+  if to-unit in ('em' 'rem')
+    return value if from-unit in ('em' 'rem')
+    return unit((value / context), to-unit)
+  if to-unit is 'px'
+    return unit((value * context), 'px')
 
 -on-scale(n)
   return unit(n) is ''
 
 -larger-than-scale(n)
-  return (n > (length(scale) - 1)) and -on-scale(n)
+  return (n > (length(rupture.scale) - 1)) and -on-scale(n)
 
 -is-zero(n)
   return n is 0
 
--overlap-shift(n)
-  -shiftUnit = unit(n)
+-overlap-shift(anti-overlap, n)
+  shift-unit = unit(n)
+  anti-overlap = 0px unless anti-overlap
+  anti-overlap = 1px if anti-overlap is true
+  if length(anti-overlap) is 1
+    return -convert-to(shift-unit, anti-overlap)
   for val in anti-overlap
-    return val if unit(val) is -shiftUnit
-  return 1px if -shiftUnit is 'px'
-  return .0625em if -shiftUnit is 'em'
-  return .0625rem if -shiftUnit is 'rem'
-  return 0
+    return val if unit(val) is shift-unit
 
--adjust-overlap(n, side = 'min')
-  -shift = -overlap-shift(n)
+-adjust-overlap(anti-overlap, n, side = 'min')
+  -shift = -overlap-shift(anti-overlap, n)
   if (side is 'min' and -shift > 0) or (side is 'max' and -shift < 0)
     n = n + -shift
   return n
@@ -47,50 +54,50 @@ anti-overlap          ?= 1px .0625em .0625rem
 //   - +between(1, 300px) scale:custom
 //   - +between(200px, 4) custom:scale
 
-between(min, max, force-anti-overlap = false)
-  -min = scale[min - 1] unless -is-zero(min) or (not -on-scale(min))
-  -max = scale[max] unless not -on-scale(max)
+between(min, max, anti-overlap = rupture.anti-overlap)
+  -min = rupture.scale[min - 1] unless -is-zero(min) or (not -on-scale(min))
+  -max = rupture.scale[max] unless not -on-scale(max)
   -min ?= min
   -max ?= max
 
   condition = 'only screen'
   unless -min is 0
-    -min = -adjust-overlap(-min, side: 'min') if enable-anti-overlap or force-anti-overlap
-    -min = -convert-to-ems(-min) if enable-em-breakpoints
+    -min = -convert-to('em', -min) if rupture.enable-em-breakpoints
+    -min = -adjust-overlap(anti-overlap, -min, side: 'min')
     condition = condition + ' and (min-width: %s)' % (-min)
   unless -larger-than-scale(max)
-    -max = -adjust-overlap(-max, side: 'max') if enable-anti-overlap or force-anti-overlap
-    -max = -convert-to-ems(-max) if enable-em-breakpoints
+    -max = -convert-to('em', -max) if rupture.enable-em-breakpoints
+    -max = -adjust-overlap(anti-overlap, -max, side: 'max')
     condition = condition + ' and (max-width: %s)' % (-max)
   @media condition
     {block}
 
-at(scale-point, force-anti-overlap = false)
-  +between(scale-point, scale-point, force-anti-overlap)
+at(scale-point, anti-overlap = rupture.anti-overlap)
+  +between(scale-point, scale-point, anti-overlap)
     {block}
 
-from(scale-point, force-anti-overlap = false)
-  +between(scale-point, length(scale), force-anti-overlap)
+from(scale-point, anti-overlap = rupture.anti-overlap)
+  +between(scale-point, length(rupture.scale), anti-overlap)
     {block}
 
 above = from
 
-to(scale-point, force-anti-overlap = false)
-  +between(1, scale-point, force-anti-overlap)
+to(scale-point, anti-overlap = rupture.anti-overlap)
+  +between(1, scale-point, anti-overlap)
     {block}
 
 below = to
 
-mobile(force-anti-overlap = false)
-  +below(mobile-cutoff, force-anti-overlap)
+mobile(anti-overlap = rupture.anti-overlap)
+  +below(rupture.mobile-cutoff, anti-overlap)
     {block}
 
-tablet(force-anti-overlap = false)
-  +between(mobile-cutoff, desktop-cutoff, force-anti-overlap)
+tablet(anti-overlap = rupture.anti-overlap)
+  +between(rupture.mobile-cutoff, rupture.desktop-cutoff, anti-overlap)
     {block}
 
-desktop(force-anti-overlap = false)
-  +above(desktop-cutoff, force-anti-overlap)
+desktop(anti-overlap = rupture.anti-overlap)
+  +above(rupture.desktop-cutoff, anti-overlap)
     {block}
 
 retina()

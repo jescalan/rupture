@@ -19,7 +19,7 @@
     text-align: right;
   }
 }
-@media only screen and (min-width: 20em) and (max-width: 49.9375em) {
+@media only screen and (min-width: 20em) and (max-width: 49.999em) {
   .overlap-minus-em {
     text-align: left;
   }
@@ -45,7 +45,7 @@
     text-align: right;
   }
 }
-@media only screen and (min-width: 20rem) and (max-width: 49.9375em) {
+@media only screen and (min-width: 20rem) and (max-width: 49.999em) {
   .overlap-minus-rem {
     text-align: left;
   }
@@ -84,7 +84,7 @@
     text-align: right;
   }
 }
-@media only screen and (min-width: 601px) and (max-width: 800px) {
+@media only screen and (min-width: 600px) and (max-width: 800px) {
   .overlap-force {
     text-align: left;
   }
@@ -128,7 +128,7 @@
     text-align: right;
   }
 }
-@media only screen and (min-width: 37.5625em) and (max-width: 50em) {
+@media only screen and (min-width: 37.5em) and (max-width: 50em) {
   .overlap-force-em {
     text-align: left;
   }
