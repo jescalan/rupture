@@ -42,7 +42,47 @@ A list of values that you can reference by index in most of the mixins listed be
 ```js
 scale = 0 400px 600px 800px 1050px
 ```
+##### `anti-overlap`
 
+List of values that controls [anti-overlapping behavior](#scale-overlap).
+Works for `px`, `em`, `rem`, and can also be negative.
+Default looks like this:
+
+```js
+anti-overlap = 1px .0625em .0625rem
+```
+
+##### `enable-anti-overlap`
+Boolean value that toggles the [anti-overlapping feature](#scale-overlap) of mixins.
+Default looks like this:
+
+```js
+enable-anti-overlap = false
+```
+
+If you don't want to enable anti-overlapping globally, you can force it locally by passing the `force-anti-overlap` keyword argument to any of the mixins except `retina()`.
+For example:
+
+```
+.overlap-force
+  text-align center
+  +at(2, force-anti-overlap: true)
+    text-align right
+  +at(3, force-anti-overlap: true)
+    text-align left
+  +from(4, force-anti-overlap: true)
+    text-align justify
+  +to(4, force-anti-overlap: true)
+    border 1px
+  +from(5, force-anti-overlap: true)
+    text-align justify
+  +tablet(force-anti-overlap: true)
+    font-weight bold
+  +mobile(force-anti-overlap: true)
+    font-weight normal
+  +desktop(force-anti-overlap: true)
+    font-style italic
+```
 ### Mixins
 
 So there are two "categories" of mixins that are a part of rupture. The first is a very basic set designed to simply shorten and sweeten standard media queries, and the second is a very close port of the fantastic [breakpoint-slicer](https://github.com/lolmaus/breakpoint-slicer) library, which can be used almost as a grid. We'll go through these in order.
@@ -115,6 +155,75 @@ enable-em-breakpoints = true
  * }
  */
 ```
+
+### Scale overlap
+You can prevent scale slices from overlapping with neighbouring slices by setting the [`enable-anti-overlap`][#enable-anti-overlap] variable to true. This will increment or decrement the media query arguments by an offset of the appropriate unit, controlled by the [`anti-overlap` variable](#anti-overlap).
+
+The `anti-overlap` variable may contain positive or negative values. Positive values will increase the media query's `min-width` argument, while negative values will decrease the `max-width` argument.
+
+For example, with positive offsets:
+
+```
+  scale = 0 10em 20em 800px 1050px
+  enable-anti-overlap = true
+  enable-em-breakpoints = true
+  anti-overlap = 1px 0.001em 0.001rem
+  
+  .overlap-plus-em
+    text-align center
+    +at(2)
+      text-align right
+    +at(3)
+      text-align left
+      
+/**
+  * compiles to:
+  * .overlap-plus-em {
+  *     text-align:center;
+  * }
+  * @media only screen and (min-width: 10.001em) and (max-width: 20em) {
+  *     .overlap-plus-em {
+  *         text-align:right;
+  *     }
+  * }
+  * @media only screen and (min-width: 20.001em) and (max-width: 50em) {
+  *    .overlap-plus-em {
+  *         text-align:left;
+  *     }
+  * }
+  */
+```
+
+With negative offsets:
+
+```
+anti-overlap = -1px -0.001em -0.001rem
+
+.overlap-minus-em
+  text-align center
+  +at(2)
+    text-align right
+  +at(3)
+    text-align left
+/**
+ * compiles to:
+ * .overlap-minus-em {
+ *     text-align:center;
+ * }
+ * @media only screen and (min-width: 10em) and (max-width: 19.999em) {
+ *     .overlap-minus-em {
+ *         text-align:right;
+ *     }
+ * }
+ * @media only screen and (min-width: 20em) and (max-width: 49.9375em) {
+ *     .overlap-minus-em {
+ *         text-align:left;
+ *     }
+ * }
+*/
+```
+
+More examples can be found in [`tests/overlap.styl`](test/fixtures/overlap.styl).
 
 ### What is a "measure"?
 
