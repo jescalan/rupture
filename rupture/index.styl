@@ -1,17 +1,22 @@
-mobile-cutoff         ?= 400px
-desktop-cutoff        ?= 1050px
-enable-em-breakpoints ?= false
-base-font-size        ?= 16px
-scale                 ?= 0 mobile-cutoff 600px 800px desktop-cutoff
+base-font-size ?= 16px
 
--convert-to-ems(target, context = base-font-size)
+rupture = {
+  mobile-cutoff: 400px
+  desktop-cutoff: 1050px
+  enable-em-breakpoints: false
+  base-font-size: base-font-size
+}
+
+rupture.scale = 0 400px 600px 800px 1050px
+
+-convert-to-ems(target, context = rupture.base-font-size)
   return unit((target / context), 'em')
 
 -on-scale(n)
   return unit(n) is ''
 
 -larger-than-scale(n)
-  return (n > (length(scale) - 1)) and -on-scale(n)
+  return (n > (length(rupture.scale) - 1)) and -on-scale(n)
 
 -is-zero(n)
   return n is 0
@@ -27,24 +32,24 @@ scale                 ?= 0 mobile-cutoff 600px 800px desktop-cutoff
 
 between(min, max)
   if (-on-scale(min)) and (-on-scale(max))
-    -min = -is-zero(min) ? 0 : scale[min - 1]
-    -max = scale[max]
+    -min = -is-zero(min) ? 0 : rupture.scale[min - 1]
+    -max = rupture.scale[max]
   else if (-on-scale(min)) and (not -on-scale(max))
-    -min = -is-zero(min) ? 0 : scale[min - 1]
+    -min = -is-zero(min) ? 0 : rupture.scale[min - 1]
     -max = max
   else if (not -on-scale(min)) and (-on-scale(max))
     -min = min
-    -max = scale[max]
+    -max = rupture.scale[max]
   else
     -min = min
     -max = max
   if -min is not 0
-    -min = -convert-to-ems(-min) if enable-em-breakpoints
+    -min = -convert-to-ems(-min) if rupture.enable-em-breakpoints
     condition = 'only screen and (min-width: %s)' % (-min)
   else
     condition = 'only screen'
   unless -larger-than-scale(max)
-    -max = -convert-to-ems(-max) if enable-em-breakpoints
+    -max = -convert-to-ems(-max) if rupture.enable-em-breakpoints
     condition = condition + ' and (max-width: %s)' % (-max)
   @media condition
     {block}
@@ -54,7 +59,7 @@ at(scale-point)
     {block}
 
 from(scale-point)
-  +between(scale-point, length(scale))
+  +between(scale-point, length(rupture.scale))
     {block}
 
 above = from
@@ -66,15 +71,15 @@ to(scale-point)
 below = to
 
 mobile()
-  +below(mobile-cutoff)
+  +below(rupture.mobile-cutoff)
     {block}
 
 tablet()
-  +between(mobile-cutoff, desktop-cutoff)
+  +between(rupture.mobile-cutoff, rupture.desktop-cutoff)
     {block}
 
 desktop()
-  +above(desktop-cutoff)
+  +above(rupture.desktop-cutoff)
     {block}
 
 retina()
