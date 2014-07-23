@@ -1,0 +1,103 @@
+rupture.scale = 0 10em 20em 800px 1050px
+rupture.enable-em-breakpoints = true
+rupture.anti-overlap = 1px 0.001em 0.001rem
+
+.overlap-plus-em
+  text-align center
+  +at(2)
+    text-align right
+  +at(3)
+    text-align left
+    
+rupture.anti-overlap = -1px -0.001em -0.001rem
+
+.overlap-minus-em
+  text-align center
+  +at(2)
+    text-align right
+  +at(3)
+    text-align left
+
+rupture.anti-overlap = 1px .001em .001rem
+rupture.scale = 0 10rem 20rem 800px 1050px
+
+.overlap-plus-rem
+  text-align center
+  +at(2)
+    text-align right
+  +at(3)
+    text-align left
+    
+rupture.anti-overlap = -1px -.001em -.001rem
+.overlap-minus-rem
+  text-align center
+  +at(2)
+    text-align right
+  +at(3)
+    text-align left
+    
+rupture.anti-overlap = 1px .001em .001rem
+rupture.enable-em-breakpoints = false
+rupture.scale = 0 100px 200px 800px 1050px
+.overlap-plus-px
+  text-align center
+  +at(2)
+    text-align right
+  +at(3)
+    text-align left
+    
+rupture.anti-overlap = -1px -.001em -.001rem
+.overlap-minus-px
+  text-align center
+  +at(2)
+    text-align right
+  +at(3)
+    text-align left
+
+rupture.mobile-cutoff = 400px
+rupture.desktop-cutoff = 1050px
+rupture.scale = 0 (rupture.mobile-cutoff) 600px 800px (rupture.desktop-cutoff)
+rupture.anti-overlap = false
+rupture.enable-em-breakpoints = false
+
+.overlap-force 
+  text-align center
+  +at(2, anti-overlap: true)
+    text-align right
+  +at(3, anti-overlap: false)
+    text-align left
+  +from(4, anti-overlap: 1px)
+    text-align justify
+  +to(4, anti-overlap: 0.0625em)
+    border 1px
+    content 'we are going max-width, and overlap is positive, so wont change'
+  +from(5, anti-overlap: 0.0625rem)
+    text-align justify
+  +tablet(anti-overlap: 1px 0.0625em 0.0625rem)
+    font-weight bold
+  +mobile(anti-overlap: true)
+    font-weight normal
+  +desktop(anti-overlap: true)
+    font-style italic
+    
+rupture.enable-em-breakpoints = true
+
+.overlap-force-em
+  text-align center
+  +at(2, anti-overlap: true)
+    text-align right
+  +at(3, anti-overlap: false)
+    text-align left
+  +from(4, anti-overlap: 1px)
+    text-align justify
+  +to(4, anti-overlap: 0.0625em)
+    border 1px
+    content 'we are going max-width, and overlap is positive, so wont change'
+  +from(5, anti-overlap: 0.0625rem)
+    text-align justify
+  +tablet(anti-overlap: 1px 0.0625em 0.0625rem)
+    font-weight bold
+  +mobile(anti-overlap: true)
+    font-weight normal
+  +desktop(anti-overlap: true)
+    font-style italic

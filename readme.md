@@ -43,6 +43,22 @@ A list of values that you can reference by index in most of the mixins listed be
 rupture.scale = 0 400px 600px 800px 1050px
 ```
 
+##### `rupture.enable-em-breakpoints`
+Enables Rupture's [PX to EM unit conversion](#px-to-em-unit-conversion) feature. If set to true, pixel breakpoint values will be automatically converted into em values.
+
+##### `rupture.base-font-size`
+Determines the conversion factor for converting between px and em/rem values. Will default to the global `base-font-size` variable if it is defined, or 16px otherwise. For example, if you want to set the conversion factor at 1em = 10px, you can do:
+
+```js
+rupture.base-font-size = 10px
+html
+  font-size: 62.5%
+```
+
+##### `rupture.anti-overlap`
+
+Controls Rupture's [anti-overlapping](#scale-overlap) feature. Defaults to `false`.
+
 ### Mixins
 
 So there are two "categories" of mixins that are a part of rupture. The first is a very basic set designed to simply shorten and sweeten standard media queries, and the second is a very close port of the fantastic [breakpoint-slicer](https://github.com/lolmaus/breakpoint-slicer) library, which can be used almost as a grid. We'll go through these in order.
@@ -115,6 +131,112 @@ rupture.enable-em-breakpoints = true
  * }
  */
 ```
+
+### Scale overlap
+
+You can prevent scale slices from overlapping with neighbouring slices by setting the [`rupture.anti-overlap`][#enable-anti-overlap] variable. This variable can contain a list of offset values for different units, which will be applied to your media queries so they do not overlap. The offset value(s) can be positive or negative, indicating how they should affect the media query arguments. If you provide a single value such as `1px` but you are using em breakpoints, Rupture can convert the offset to the correct unit based on the `rupture.base-font-size` variable.
+
+Alternatively, you can set `rupture.anti-overlap` to `true` or any falsy value, which are equivalent to `1px` and `0px`, respectively. Here are some examples:
+
+```js
+rupture.anti-overlap = false // default value
+rupture.anti-overlap = true // enables 1px (or em equivalent) overlap correction globally
+rupture.anti-overlap = 0px // same as rupture.anti-overlap = false
+rupture.anti-overlap = 1px // same as rupture.anti-overlap = true
+rupture.anti-overlap = -1px // negative offsets decrease the `max-width` arguments
+rupture.anti-overlap = 0.001em // positive offsets increase the `min-width` arguments
+rupture.anti-overlap = 1px 0.0625em 0.0625rem // explicit relative values will be used if they are provided instead of calculating them from the font size
+```
+
+If you don't want to enable anti-overlapping globally, you can enable or disable it locally by passing the `anti-overlap` keyword argument to any of the mixins except `retina()`. This works exactly like the global `rupture.anti-overlap` variable, except you can specify it per mixin call. For example:
+
+```
+.overlap-force 
+  text-align center
+  +at(2, anti-overlap: true)
+    text-align right
+  +at(3, anti-overlap: false)
+    text-align left
+  +from(4, anti-overlap: 1px)
+    text-align justify
+  +to(4, anti-overlap: 0.0625em)
+    border 1px
+  +from(5, anti-overlap: 0.0625rem)
+    text-align justify
+  +tablet(anti-overlap: 1px 0.0625em 0.0625rem)
+    font-weight bold
+  +mobile(anti-overlap: true)
+    font-weight normal
+  +desktop(anti-overlap: true)
+    font-style italic
+```
+
+The `anti-overlap` offset list may contain positive or negative values. Positive values will increase the media query's `min-width` argument, while negative values will decrease the `max-width` argument.
+
+For example, with a positive offset:
+
+```
+rupture.scale = 0 400px 800px 1200px
+rupture.anti-overlap = 1px
+
+.some-ui-element
+  text-align center
+  +at(2)
+    text-align right
+  +at(3)
+    text-align left
+      
+/**
+  * compiles to:
+  * .some-ui-element {
+  *     text-align:center;
+  * }
+  * @media only screen and (min-width: 401px) and (max-width: 800px) {
+  *     .some-ui-element {
+  *         text-align:right;
+  *     }
+  * }
+  * @media only screen and (min-width: 801px) and (max-width: 1200px) {
+  *    .some-ui-element {
+  *         text-align:left;
+  *     }
+  * }
+  */
+```
+
+With a negative offset (and em breakpoints):
+
+```
+rupture.scale = 0 400px 800px 1200px
+rupture.anti-overlap = -1px
+rupture.enable-em-breakpoints = true
+
+.some-ui-element
+  text-align center
+  +at(2)
+    text-align right
+  +at(3)
+    text-align left
+
+/**
+ * compiles to:
+ * .some-ui-element {
+ *     text-align:center;
+ * }
+ * @media only screen and (min-width: 25em) and (max-width: 49.9375em) {
+ *     .some-ui-element {
+ *         text-align:right;
+ *     }
+ * }
+ * @media only screen and (min-width: 50em) and (max-width: 74.9375em) {
+ *     .some-ui-element {
+ *         text-align:left;
+ *     }
+ * }
+*/
+```
+
+More examples can be found in [`tests/overlap.styl`](test/fixtures/overlap.styl).
 
 ### What is a "measure"?
 

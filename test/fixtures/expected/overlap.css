@@ -1,0 +1,166 @@
+.overlap-plus-em {
+  text-align: center;
+}
+@media only screen and (min-width: 10.001em) and (max-width: 20em) {
+  .overlap-plus-em {
+    text-align: right;
+  }
+}
+@media only screen and (min-width: 20.001em) and (max-width: 50em) {
+  .overlap-plus-em {
+    text-align: left;
+  }
+}
+.overlap-minus-em {
+  text-align: center;
+}
+@media only screen and (min-width: 10em) and (max-width: 19.999em) {
+  .overlap-minus-em {
+    text-align: right;
+  }
+}
+@media only screen and (min-width: 20em) and (max-width: 49.999em) {
+  .overlap-minus-em {
+    text-align: left;
+  }
+}
+.overlap-plus-rem {
+  text-align: center;
+}
+@media only screen and (min-width: 10.001rem) and (max-width: 20rem) {
+  .overlap-plus-rem {
+    text-align: right;
+  }
+}
+@media only screen and (min-width: 20.001rem) and (max-width: 50em) {
+  .overlap-plus-rem {
+    text-align: left;
+  }
+}
+.overlap-minus-rem {
+  text-align: center;
+}
+@media only screen and (min-width: 10rem) and (max-width: 19.999rem) {
+  .overlap-minus-rem {
+    text-align: right;
+  }
+}
+@media only screen and (min-width: 20rem) and (max-width: 49.999em) {
+  .overlap-minus-rem {
+    text-align: left;
+  }
+}
+.overlap-plus-px {
+  text-align: center;
+}
+@media only screen and (min-width: 101px) and (max-width: 200px) {
+  .overlap-plus-px {
+    text-align: right;
+  }
+}
+@media only screen and (min-width: 201px) and (max-width: 800px) {
+  .overlap-plus-px {
+    text-align: left;
+  }
+}
+.overlap-minus-px {
+  text-align: center;
+}
+@media only screen and (min-width: 100px) and (max-width: 199px) {
+  .overlap-minus-px {
+    text-align: right;
+  }
+}
+@media only screen and (min-width: 200px) and (max-width: 799px) {
+  .overlap-minus-px {
+    text-align: left;
+  }
+}
+.overlap-force {
+  text-align: center;
+}
+@media only screen and (min-width: 401px) and (max-width: 600px) {
+  .overlap-force {
+    text-align: right;
+  }
+}
+@media only screen and (min-width: 600px) and (max-width: 800px) {
+  .overlap-force {
+    text-align: left;
+  }
+}
+@media only screen and (min-width: 801px)  {
+  .overlap-force {
+    text-align: justify;
+  }
+}
+@media only screen and (max-width: 1050px) {
+  .overlap-force {
+    border: 1px;
+    content: 'we are going max-width, and overlap is positive, so wont change';
+  }
+}
+@media only screen and (min-width: 1051px)  {
+  .overlap-force {
+    text-align: justify;
+  }
+}
+@media only screen and (min-width: 401px) and (max-width: 1050px) {
+  .overlap-force {
+    font-weight: bold;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .overlap-force {
+    font-weight: normal;
+  }
+}
+@media only screen and (min-width: 1051px) {
+  .overlap-force {
+    font-style: italic;
+  }
+}
+.overlap-force-em {
+  text-align: center;
+}
+@media only screen and (min-width: 25.0625em) and (max-width: 37.5em) {
+  .overlap-force-em {
+    text-align: right;
+  }
+}
+@media only screen and (min-width: 37.5em) and (max-width: 50em) {
+  .overlap-force-em {
+    text-align: left;
+  }
+}
+@media only screen and (min-width: 50.0625em)  {
+  .overlap-force-em {
+    text-align: justify;
+  }
+}
+@media only screen and (max-width: 65.625em) {
+  .overlap-force-em {
+    border: 1px;
+    content: 'we are going max-width, and overlap is positive, so wont change';
+  }
+}
+@media only screen and (min-width: 65.6875em)  {
+  .overlap-force-em {
+    text-align: justify;
+  }
+}
+@media only screen and (min-width: 25.0625em) and (max-width: 65.625em) {
+  .overlap-force-em {
+    font-weight: bold;
+  }
+}
+@media only screen and (max-width: 25em) {
+  .overlap-force-em {
+    font-weight: normal;
+  }
+}
+@media only screen and (min-width: 65.6875em) {
+  .overlap-force-em {
+    font-style: italic;
+  }
+}
