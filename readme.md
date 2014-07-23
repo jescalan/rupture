@@ -59,6 +59,28 @@ html
 
 Controls Rupture's [anti-overlapping](#scale-overlap) feature. Defaults to `false`.
 
+##### `rupture.density-queries`
+List of values that controls what conditions to include when creating media queries for high resolution displays. Valid values include 'webkit', 'moz', 'o', 'ratio', 'dpi', and 'dppx' The default list is:
+
+```js
+rupture.density-queries = 'dppx' 'webkit' 'moz' 'dpi'
+```
+
+In general, [you can set this to `'webkit' 'dpi'`](http://www.brettjankord.com/2012/11/28/cross-browser-retinahigh-resolution-media-queries/) to support all modern browsers while limiting the size of the generated media queries.
+
+To create a media query that only targets devices with a high pixel density, either use the `density()` or `retina()` mixins or pass a `density` keyword argument to any of the other mixins. Values passed to the `density` mixin or keyword argument should be a unitless pixel-ratio (1 for 96dpi, 2 for 192dpi, etc). For example, to target phones with a pixel density of at least 1.25, you can do:
+
+```js
++mobile(density: 1.25)
+```
+
+##### `rupture.retina-density`
+Value which controls the minimum density of a device considered to have a retina display. Defaults to 1.5. This value will be used when you call the `retina()` mixin or pass `density: 'retina'` as a keyword argument to any of the width mixins. For example, to target retina tablets, you can do:
+
+```js
++tablet(density: 'retina') // equivalent to +tablet(density: 1.5) unless you change rupture.retina-density
+```
+
 ### Mixins
 
 So there are two "categories" of mixins that are a part of rupture. The first is a very basic set designed to simply shorten and sweeten standard media queries, and the second is a very close port of the fantastic [breakpoint-slicer](https://github.com/lolmaus/breakpoint-slicer) library, which can be used almost as a grid. We'll go through these in order.
@@ -90,8 +112,11 @@ When the screen size is between 1050px (defined by `rupture.desktop-cutoff`) and
 ##### `+desktop()`
 When the screen size is 1050px (defined by `rupture.desktop-cutoff`) or more, the styles in the block will take effect.
 
+##### `+density(value)`
+When the device has a pixel density of at least the given `value`, the styles in the block will take effect. The `value` should be a unitless pixel ratio number such as `1`, `1.5`, or `2`. The `value` can also be the string `'retina'`, in which case the `rupture.retina-density` variable will be used.
+
 ##### `+retina()`
-When the device has a pixel density of over 1.5 (retina), the styles in the block will take effect.
+When the device has a pixel density of over `rupture.retina-density` (defaults to 1.5), the styles in the block will take effect.
 
 ### PX to EM unit conversion
 

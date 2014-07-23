@@ -1,5 +1,38 @@
+rupture.density-queries = ('webkit' 'dpi')
+rupture.retina-density = 2
+
 .hello
   color: red
 
   +retina()
     color: blue
+
+  +density(3)
+    color: maroon
+
+  +above(500px, density: 'retina')
+    color: lime
+
+  +at(2, density: 'retina')
+    color: cyan
+
+  +below(500px, density: 'retina')
+    color: magenta
+
+  +between(2, 4, density: 'retina')
+    color: yellow
+
+  +desktop(density: 1)
+    color: black
+
+  +from(2, density: 1.25)
+    color: white
+
+  +mobile(density: 1.3)
+    color: green
+
+  +tablet(density: 1.5)
+    color: gray
+
+  +to(2, density: 2)
+    color: navy
