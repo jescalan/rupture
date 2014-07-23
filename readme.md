@@ -59,6 +59,19 @@ html
 
 Controls Rupture's [anti-overlapping](#scale-overlap) feature. Defaults to `false`.
 
+##### `rupture.retina-queries`
+A list of query condition strings that will be used to generate retina media queries. By default, it looks like:
+
+```js
+rupture.retina-queries = '(min-resolution: 1.5dppx)' '(-webkit-min-device-pixel-ratio: 1.5)' '(min--moz-device-pixel-ratio: 1.5)' '(min-resolution: 144dpi)'
+```
+
+To create a media query that only targets devices with high pixel densities, either use the `retina()` mixin or pass `retina: true` as a keyword argument to any of the other mixins. For example, to target phones with retina displays, use:
+
+```js
++mobile(retina: true)
+```
+
 ### Mixins
 
 So there are two "categories" of mixins that are a part of rupture. The first is a very basic set designed to simply shorten and sweeten standard media queries, and the second is a very close port of the fantastic [breakpoint-slicer](https://github.com/lolmaus/breakpoint-slicer) library, which can be used almost as a grid. We'll go through these in order.

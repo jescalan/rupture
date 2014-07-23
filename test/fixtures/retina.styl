@@ -1,5 +1,34 @@
+rupture.retina-queries = '(-webkit-min-device-pixel-ratio: 2)' '(min-resolution: 192dpi)'
+
 .hello
   color: red
 
   +retina()
     color: blue
+
+  +above(500px, retina: true)
+    color: lime
+
+  +at(2, retina: true)
+    color: cyan
+
+  +below(500px, retina: true)
+    color: magenta
+
+  +between(2, 4, retina: true)
+    color: yellow
+
+  +desktop(retina: true)
+    color: black
+
+  +from(2, retina: true)
+    color: white
+
+  +mobile(retina: true)
+    color: green
+
+  +tablet(retina: true)
+    color: gray
+
+  +to(2, retina: true)
+    color: navy

@@ -1,8 +1,53 @@
 .hello {
   color: #f00;
 }
-@media (min-resolution: 1.5dppx), (-webkit-min-device-pixel-ratio: 1.5), (min--moz-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .hello {
     color: #00f;
+  }
+}
+@media only screen and (min-width: 500px) and (-webkit-min-device-pixel-ratio: 2), only screen and (min-width: 500px) and (min-resolution: 192dpi) {
+  .hello {
+    color: #0f0;
+  }
+}
+@media only screen and (min-width: 400px) and (max-width: 600px) and (-webkit-min-device-pixel-ratio: 2), only screen and (min-width: 400px) and (max-width: 600px) and (min-resolution: 192dpi) {
+  .hello {
+    color: #0ff;
+  }
+}
+@media only screen and (max-width: 500px) and (-webkit-min-device-pixel-ratio: 2), only screen and (max-width: 500px) and (min-resolution: 192dpi) {
+  .hello {
+    color: #f0f;
+  }
+}
+@media only screen and (min-width: 400px) and (max-width: 1050px) and (-webkit-min-device-pixel-ratio: 2), only screen and (min-width: 400px) and (max-width: 1050px) and (min-resolution: 192dpi) {
+  .hello {
+    color: #ff0;
+  }
+}
+@media only screen and (min-width: 1050px) and (-webkit-min-device-pixel-ratio: 2), only screen and (min-width: 1050px) and (min-resolution: 192dpi) {
+  .hello {
+    color: #000;
+  }
+}
+@media only screen and (min-width: 400px) and (-webkit-min-device-pixel-ratio: 2), only screen and (min-width: 400px) and (min-resolution: 192dpi) {
+  .hello {
+    color: #fff;
+  }
+}
+@media only screen and (max-width: 400px) and (-webkit-min-device-pixel-ratio: 2), only screen and (max-width: 400px) and (min-resolution: 192dpi) {
+  .hello {
+    color: #008000;
+  }
+}
+@media only screen and (min-width: 400px) and (max-width: 1050px) and (-webkit-min-device-pixel-ratio: 2), only screen and (min-width: 400px) and (max-width: 1050px) and (min-resolution: 192dpi) {
+  .hello {
+    color: #808080;
+  }
+}
+@media only screen and (max-width: 600px) and (-webkit-min-device-pixel-ratio: 2), only screen and (max-width: 600px) and (min-resolution: 192dpi) {
+  .hello {
+    color: #000080;
   }
 }
