@@ -55,3 +55,6 @@ describe 'basic', ->
 
   it 'adds anti-overlap correction to prevent overlapping media queries', (done) ->
     match_expected('overlap.styl', done)
+
+  it 'supports named scale units', (done) ->
+    match_expected('named.styl', done)

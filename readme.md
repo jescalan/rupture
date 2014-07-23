@@ -43,6 +43,21 @@ A list of values that you can reference by index in most of the mixins listed be
 rupture.scale = 0 400px 600px 800px 1050px
 ```
 
+##### `rupture.scale-names`
+A list of strings you can reference that correspond to their index location in `rupture.scale`. This works exactly like [breakpoint-slicer](https://github.com/lolmaus/breakpoint-slicer#calling-slices-by-names-rather-than-numbers)
+
+```
+rupture.scale =        0        400px       600px      800px        1050px
+
+//                     └────┬────┘ └────┬────┘ └────┬────┘ └────┬────┘ └────┬────
+// Slice numbers:           1           2           3           4           5
+rupture.scale-names:       'xs'        's'         'm'         'l'         'xl'
+```
+
+```js
+rupture.scale-names = 'xs' 's' 'm' 'l' 'xl'
+```
+
 ##### `rupture.enable-em-breakpoints`
 Enables Rupture's [PX to EM unit conversion](#px-to-em-unit-conversion) feature. If set to true, pixel breakpoint values will be automatically converted into em values.
 
@@ -190,7 +205,7 @@ rupture.anti-overlap = 1px 0.0625em 0.0625rem // explicit relative values will b
 If you don't want to enable anti-overlapping globally, you can enable or disable it locally by passing the `anti-overlap` keyword argument to any of the mixins except `retina()`. This works exactly like the global `rupture.anti-overlap` variable, except you can specify it per mixin call. For example:
 
 ```
-.overlap-force 
+.overlap-force
   text-align center
   +at(2, anti-overlap: true)
     text-align right
@@ -224,7 +239,7 @@ rupture.anti-overlap = 1px
     text-align right
   +at(3)
     text-align left
-      
+
 /**
   * compiles to:
   * .some-ui-element {
