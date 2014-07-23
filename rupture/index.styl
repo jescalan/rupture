@@ -6,7 +6,8 @@ rupture = {
   enable-em-breakpoints: false
   base-font-size: base-font-size
   anti-overlap: false
-  retina-queries: '(min-resolution: 1.5dppx)' '(-webkit-min-device-pixel-ratio: 1.5)' '(min--moz-device-pixel-ratio: 1.5)' '(min-resolution: 144dpi)'
+  density-queries: 'dppx' 'webkit' 'moz' 'dpi'
+  retina-density: 1.5
 }
 
 rupture.scale = 0 (rupture.mobile-cutoff) 600px 800px (rupture.desktop-cutoff)
@@ -46,6 +47,25 @@ rupture.scale = 0 (rupture.mobile-cutoff) 600px 800px (rupture.desktop-cutoff)
     
 -is-positive(n)
   return n >= 0
+
+-density-queries(density)
+  density = rupture.retina-density if density is 'retina'
+  queries = ()
+  for query in rupture.density-queries
+    if query is 'webkit'
+      push(queries, '(-webkit-min-device-pixel-ratio: %s)' % (density))
+    else if query is 'moz'
+      push(queries, '(min--moz-device-pixel-ratio: %s)' % (density))
+    else if query is 'o'
+      push(queries, '(-o-min-device-pixel-ratio: %s/1)' % (density))
+    else if query is 'ratio'
+      push(queries, '(min-device-pixel-ratio: %s)' % (density))
+    else if query is 'dpi'
+      push(queries, '(min-resolution: %sdpi)' % (round(density * 96, 1)))
+    else if query is 'dppx'
+      push(queries, '(min-resolution: %sdppx)' % (density))
+  return queries
+
 // +between(min, max)
 // usage (scale can be mixed with custom values):
 //   - +between(1, 3) scale:scale
@@ -55,7 +75,7 @@ rupture.scale = 0 (rupture.mobile-cutoff) 600px 800px (rupture.desktop-cutoff)
 //   - +between(1, 300px) scale:custom
 //   - +between(200px, 4) custom:scale
 
-between(min, max, anti-overlap = rupture.anti-overlap, retina = false)
+between(min, max, anti-overlap = rupture.anti-overlap, density = null)
   -min = rupture.scale[min - 1] unless -is-zero(min) or (not -on-scale(min))
   -max = rupture.scale[max] unless not -on-scale(max)
   -min ?= min
@@ -70,43 +90,50 @@ between(min, max, anti-overlap = rupture.anti-overlap, retina = false)
     -max = -convert-to('em', -max) if rupture.enable-em-breakpoints
     -max = -adjust-overlap(anti-overlap, -max, side: 'max')
     condition = condition + ' and (max-width: %s)' % (-max)
-  if retina
+  if density
     conditions = ()
-    for query in rupture.retina-queries
-      push(conditions, condition + ' and ' + query)
+    for query in -density-queries(density)
+      push(conditions, condition + ' and %s' % (query))
     condition = join(', ', conditions)
   @media condition
     {block}
 
-at(scale-point, anti-overlap = rupture.anti-overlap, retina = false)
-  +between(scale-point, scale-point, anti-overlap, retina)
+at(scale-point, anti-overlap = rupture.anti-overlap, density = null)
+  +between(scale-point, scale-point, anti-overlap, density)
     {block}
 
-from(scale-point, anti-overlap = rupture.anti-overlap, retina = false)
-  +between(scale-point, length(rupture.scale), anti-overlap, retina)
+from(scale-point, anti-overlap = rupture.anti-overlap, density = null)
+  +between(scale-point, length(rupture.scale), anti-overlap, density)
     {block}
 
 above = from
 
-to(scale-point, anti-overlap = rupture.anti-overlap, retina = false)
-  +between(1, scale-point, anti-overlap, retina)
+to(scale-point, anti-overlap = rupture.anti-overlap, density = null)
+  +between(1, scale-point, anti-overlap, density)
     {block}
 
 below = to
 
-mobile(anti-overlap = rupture.anti-overlap, retina = false)
-  +below(rupture.mobile-cutoff, anti-overlap, retina)
+mobile(anti-overlap = rupture.anti-overlap, density = null)
+  +below(rupture.mobile-cutoff, anti-overlap, density)
     {block}
 
-tablet(anti-overlap = rupture.anti-overlap, retina = false)
-  +between(rupture.mobile-cutoff, rupture.desktop-cutoff, anti-overlap, retina)
+tablet(anti-overlap = rupture.anti-overlap, density = null)
+  +between(rupture.mobile-cutoff, rupture.desktop-cutoff, anti-overlap, density)
     {block}
 
-desktop(anti-overlap = rupture.anti-overlap, retina = false)
-  +above(rupture.desktop-cutoff, anti-overlap, retina)
+desktop(anti-overlap = rupture.anti-overlap, density = null)
+  +above(rupture.desktop-cutoff, anti-overlap, density)
+    {block}
+
+density(density)
+  conditions = ()
+  for query in -density-queries(density)
+    push(conditions, 'only screen and %s' % (query))
+  condition = join(', ', conditions)
+  @media condition
     {block}
 
 retina()
-  condition = join(', ', rupture.retina-queries)
-  @media condition
+  +density('retina')
     {block}

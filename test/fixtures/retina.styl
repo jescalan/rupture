@@ -1,4 +1,5 @@
-rupture.retina-queries = '(-webkit-min-device-pixel-ratio: 2)' '(min-resolution: 192dpi)'
+rupture.density-queries = ('webkit' 'dpi')
+rupture.retina-density = 2
 
 .hello
   color: red
@@ -6,29 +7,32 @@ rupture.retina-queries = '(-webkit-min-device-pixel-ratio: 2)' '(min-resolution:
   +retina()
     color: blue
 
-  +above(500px, retina: true)
+  +density(3)
+    color: maroon
+
+  +above(500px, density: 'retina')
     color: lime
 
-  +at(2, retina: true)
+  +at(2, density: 'retina')
     color: cyan
 
-  +below(500px, retina: true)
+  +below(500px, density: 'retina')
     color: magenta
 
-  +between(2, 4, retina: true)
+  +between(2, 4, density: 'retina')
     color: yellow
 
-  +desktop(retina: true)
+  +desktop(density: 1)
     color: black
 
-  +from(2, retina: true)
+  +from(2, density: 1.25)
     color: white
 
-  +mobile(retina: true)
+  +mobile(density: 1.3)
     color: green
 
-  +tablet(retina: true)
+  +tablet(density: 1.5)
     color: gray
 
-  +to(2, retina: true)
+  +to(2, density: 2)
     color: navy
