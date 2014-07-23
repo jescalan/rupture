@@ -47,6 +47,9 @@ describe 'basic', ->
   it 'retina', (done) ->
     match_expected('retina.styl', done)
 
+  it 'orientation', (done) ->
+    match_expected('orientation.styl', done)
+
   it 'supports em-based media queries', (done) ->
     match_expected('ems.styl', done)
 

@@ -1,0 +1,49 @@
+rupture.density-queries = 'webkit' 'dpi'
+
+.hello
+  color: red
+
+  +landscape()
+    color: blue
+
+  +portrait()
+    color: maroon
+
+  +above(500px, orientation: landscape)
+    color: lime
+
+  +at(2, orientation: portrait)
+    color: cyan
+
+  +below(500px, orientation: landscape)
+    color: magenta
+
+  +between(2, 4, orientation: portrait)
+    color: yellow
+
+  +desktop(orientation: landscape)
+    color: black
+
+  +from(2, orientation: portrait)
+    color: white
+
+  +mobile(orientation: landscape)
+    color: green
+
+  +tablet(orientation: portrait)
+    color: gray
+
+  +to(2, orientation: landscape)
+    color: navy
+
+  +retina(orientation: portrait)
+    color: brown
+
+  +portrait(density: 'retina')
+    color: brown
+
+  +density(2, orientation: landscape)
+    color: gold
+
+  +landscape(density: 2)
+    color: gold

@@ -118,6 +118,20 @@ When the device has a pixel density of at least the given `value`, the styles in
 ##### `+retina()`
 When the device has a pixel density of over `rupture.retina-density` (defaults to 1.5), the styles in the block will take effect.
 
+##### `+landscape()`
+When the viewport is wider than it is tall, the styles in the block will take effect. You can also pass `orientation: landscape` as a keyword argument to any of the other mixins except `portrait()`:
+
+```js
++tablet(orientation: landscape)
+```
+
+##### `+portrait()`
+When the viewport is taller than it is wide, the styles in the block will take effect. You can also pass `orientation: portrait` as a keyword argument to any of the other mixins except `landscape()`:
+
+```js
++mobile(orientation: portrait)
+```
+
 ### PX to EM unit conversion
 
 It is a popular opinion that using `em` units for media queries is a good practice, and [for good reason](http://blog.cloudfour.com/the-ems-have-it-proportional-media-queries-ftw/).

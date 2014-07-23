@@ -75,7 +75,7 @@ rupture.scale = 0 (rupture.mobile-cutoff) 600px 800px (rupture.desktop-cutoff)
 //   - +between(1, 300px) scale:custom
 //   - +between(200px, 4) custom:scale
 
-between(min, max, anti-overlap = rupture.anti-overlap, density = null)
+between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientation = null)
   -min = rupture.scale[min - 1] unless -is-zero(min) or (not -on-scale(min))
   -max = rupture.scale[max] unless not -on-scale(max)
   -min ?= min
@@ -90,6 +90,8 @@ between(min, max, anti-overlap = rupture.anti-overlap, density = null)
     -max = -convert-to('em', -max) if rupture.enable-em-breakpoints
     -max = -adjust-overlap(anti-overlap, -max, side: 'max')
     condition = condition + ' and (max-width: %s)' % (-max)
+  if orientation
+    condition = condition + ' and (orientation: %s)' % (orientation)
   if density
     conditions = ()
     for query in -density-queries(density)
@@ -98,42 +100,63 @@ between(min, max, anti-overlap = rupture.anti-overlap, density = null)
   @media condition
     {block}
 
-at(scale-point, anti-overlap = rupture.anti-overlap, density = null)
-  +between(scale-point, scale-point, anti-overlap, density)
+at(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null)
+  +between(scale-point, scale-point, anti-overlap, density, orientation)
     {block}
 
-from(scale-point, anti-overlap = rupture.anti-overlap, density = null)
-  +between(scale-point, length(rupture.scale), anti-overlap, density)
+from(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null)
+  +between(scale-point, length(rupture.scale), anti-overlap, density, orientation)
     {block}
 
 above = from
 
-to(scale-point, anti-overlap = rupture.anti-overlap, density = null)
-  +between(1, scale-point, anti-overlap, density)
+to(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null)
+  +between(1, scale-point, anti-overlap, density, orientation)
     {block}
 
 below = to
 
-mobile(anti-overlap = rupture.anti-overlap, density = null)
-  +below(rupture.mobile-cutoff, anti-overlap, density)
+mobile(anti-overlap = rupture.anti-overlap, density = null, orientation = null)
+  +below(rupture.mobile-cutoff, anti-overlap, density, orientation)
     {block}
 
-tablet(anti-overlap = rupture.anti-overlap, density = null)
-  +between(rupture.mobile-cutoff, rupture.desktop-cutoff, anti-overlap, density)
+tablet(anti-overlap = rupture.anti-overlap, density = null, orientation = null)
+  +between(rupture.mobile-cutoff, rupture.desktop-cutoff, anti-overlap, density, orientation)
     {block}
 
-desktop(anti-overlap = rupture.anti-overlap, density = null)
-  +above(rupture.desktop-cutoff, anti-overlap, density)
+desktop(anti-overlap = rupture.anti-overlap, density = null, orientation = null)
+  +above(rupture.desktop-cutoff, anti-overlap, density, orientation)
     {block}
 
-density(density)
+density(density, orientation = null)
   conditions = ()
   for query in -density-queries(density)
-    push(conditions, 'only screen and %s' % (query))
+    condition = 'only screen and %s' % (query)
+    if orientation
+      condition = condition + ' and (orientation: %s)' % (orientation)
+    push(conditions, condition)
   condition = join(', ', conditions)
   @media condition
     {block}
 
-retina()
-  +density('retina')
+pixel-ratio = density
+
+retina(orientation = null)
+  +density('retina', orientation)
     {block}
+
+landscape(density = null)
+  if density
+    +pixel-ratio(density, orientation: landscape)
+      {block}
+  else
+    @media only screen and (orientation: landscape)
+      {block}
+
+portrait(density = null)
+  if density
+    +pixel-ratio(density, orientation: portrait)
+      {block}
+  else
+    @media only screen and (orientation: portrait)
+      {block}

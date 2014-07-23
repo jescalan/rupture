@@ -1,0 +1,78 @@
+.hello {
+  color: #f00;
+}
+@media only screen and (orientation: landscape) {
+  .hello {
+    color: #00f;
+  }
+}
+@media only screen and (orientation: portrait) {
+  .hello {
+    color: #800000;
+  }
+}
+@media only screen and (min-width: 500px) and (orientation: landscape) {
+  .hello {
+    color: #0f0;
+  }
+}
+@media only screen and (min-width: 400px) and (max-width: 600px) and (orientation: portrait) {
+  .hello {
+    color: #0ff;
+  }
+}
+@media only screen and (max-width: 500px) and (orientation: landscape) {
+  .hello {
+    color: #f0f;
+  }
+}
+@media only screen and (min-width: 400px) and (max-width: 1050px) and (orientation: portrait) {
+  .hello {
+    color: #ff0;
+  }
+}
+@media only screen and (min-width: 1050px) and (orientation: landscape) {
+  .hello {
+    color: #000;
+  }
+}
+@media only screen and (min-width: 400px) and (orientation: portrait) {
+  .hello {
+    color: #fff;
+  }
+}
+@media only screen and (max-width: 400px) and (orientation: landscape) {
+  .hello {
+    color: #008000;
+  }
+}
+@media only screen and (min-width: 400px) and (max-width: 1050px) and (orientation: portrait) {
+  .hello {
+    color: #808080;
+  }
+}
+@media only screen and (max-width: 600px) and (orientation: landscape) {
+  .hello {
+    color: #000080;
+  }
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (orientation: portrait), only screen and (min-resolution: 144dpi) and (orientation: portrait) {
+  .hello {
+    color: #a52a2a;
+  }
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (orientation: portrait), only screen and (min-resolution: 144dpi) and (orientation: portrait) {
+  .hello {
+    color: #a52a2a;
+  }
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape), only screen and (min-resolution: 192dpi) and (orientation: landscape) {
+  .hello {
+    color: #ffd700;
+  }
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape), only screen and (min-resolution: 192dpi) and (orientation: landscape) {
+  .hello {
+    color: #ffd700;
+  }
+}
