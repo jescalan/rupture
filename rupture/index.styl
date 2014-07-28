@@ -11,6 +11,14 @@ rupture = {
 }
 
 rupture.scale = 0 (rupture.mobile-cutoff) 600px 800px (rupture.desktop-cutoff)
+rupture.scale-names = 'xs' 's' 'm' 'l' 'xl'
+
+-get-index(item, list)
+  index = false
+  for list-item, i in list
+    if list-item is item
+      index = i
+  return index
 
 -convert-to(to-unit, value, context = rupture.base-font-size)
   from-unit = unit(value)
@@ -44,7 +52,7 @@ rupture.scale = 0 (rupture.mobile-cutoff) 600px 800px (rupture.desktop-cutoff)
   if (side is 'min' and -shift > 0) or (side is 'max' and -shift < 0)
     n = n + -shift
   return n
-    
+
 -is-positive(n)
   return n >= 0
 
@@ -76,6 +84,13 @@ rupture.scale = 0 (rupture.mobile-cutoff) 600px 800px (rupture.desktop-cutoff)
 //   - +between(200px, 4) custom:scale
 
 between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientation = null)
+
+  if typeof(min) is 'string'
+    min = rupture.scale[-get-index(min, rupture.scale-names)]
+
+  if typeof(max) is 'string'
+    max = rupture.scale[-get-index(max, rupture.scale-names)]
+
   -min = rupture.scale[min - 1] unless -is-zero(min) or (not -on-scale(min))
   -max = rupture.scale[max] unless not -on-scale(max)
   -min ?= min
