@@ -21,3 +21,8 @@
     color: #0f0;
   }
 }
+@media only screen and (min-width: 1050px) {
+  .hello {
+    color: #ccc;
+  }
+}

@@ -17,7 +17,7 @@ rupture.scale-names = 'xs' 's' 'm' 'l' 'xl'
   index = false
   for list-item, i in list
     if list-item is item
-      index = i
+      index = i + 1
   return index
 
 -convert-to(to-unit, value, context = rupture.base-font-size)
@@ -86,10 +86,10 @@ rupture.scale-names = 'xs' 's' 'm' 'l' 'xl'
 between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientation = null)
 
   if typeof(min) is 'string'
-    min = rupture.scale[-get-index(min, rupture.scale-names)]
+    min = -get-index(min, rupture.scale-names)
 
   if typeof(max) is 'string'
-    max = rupture.scale[-get-index(max, rupture.scale-names) + 1]
+    max = -get-index(max, rupture.scale-names)
 
   -min = rupture.scale[min - 1] unless -is-zero(min) or (not -on-scale(min))
   -max = rupture.scale[max] unless not -on-scale(max)
