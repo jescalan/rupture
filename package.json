@@ -8,11 +8,11 @@
     "url": "git://github.com/jenius/rupture.git"
   },
   "devDependencies": {
-    "stylus": "*",
-    "mocha": "*",
-    "should": "*",
     "coffee-script": "*",
-    "css-parse": "*"
+    "css-parse": "*",
+    "mocha": "*",
+    "should": "^4.0.4",
+    "stylus": "*"
   },
   "main": "index.js",
   "scripts": {

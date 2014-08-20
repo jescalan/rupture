@@ -89,7 +89,7 @@ between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientati
     min = rupture.scale[-get-index(min, rupture.scale-names)]
 
   if typeof(max) is 'string'
-    max = rupture.scale[-get-index(max, rupture.scale-names)]
+    max = rupture.scale[-get-index(max, rupture.scale-names) + 1]
 
   -min = rupture.scale[min - 1] unless -is-zero(min) or (not -on-scale(min))
   -max = rupture.scale[max] unless not -on-scale(max)
