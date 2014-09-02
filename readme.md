@@ -101,9 +101,6 @@ Value which controls the minimum density of a device considered to have a retina
 Value which toggles the `min-width` and `max-width` media query conditions to `min-device-width` and `max-device-width`.
 defaults to `false`
 
-```js
-+tablet(density: 'retina') // equivalent to +tablet(density: 1.5) unless you change rupture.retina-density
-```
 
 ### Mixins
 
