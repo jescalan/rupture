@@ -96,6 +96,17 @@ Value which controls the minimum density of a device considered to have a retina
 +tablet(density: 'retina') // equivalent to +tablet(density: 1.5) unless you change rupture.retina-density
 ```
 
+
+##### `rupture.use-device-width`
+Value which toggles the `min-width` and `max-width` media query conditions to `min-device-width` and `max-device-width`.
+defaults to `false`
+
+Also you can pass it as named argument to override behavior of rupture.use-device-width value:
+
+```js
++to(2, use-device-width: true)
+```
+
 ### Mixins
 
 So there are two "categories" of mixins that are a part of rupture. The first is a very basic set designed to simply shorten and sweeten standard media queries, and the second is a very close port of the fantastic [breakpoint-slicer](https://github.com/lolmaus/breakpoint-slicer) library, which can be used almost as a grid. We'll go through these in order.
