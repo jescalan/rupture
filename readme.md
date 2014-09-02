@@ -97,10 +97,15 @@ Value which controls the minimum density of a device considered to have a retina
 ```
 
 
-##### `rupture.device-width`
+##### `rupture.use-device-width`
 Value which toggles the `min-width` and `max-width` media query conditions to `min-device-width` and `max-device-width`.
 defaults to `false`
 
+Also you can pass it as named argument to override behavior of rupture.use-device-width value:
+
+```js
++to(2, use-device-width: true)
+```
 
 ### Mixins
 
