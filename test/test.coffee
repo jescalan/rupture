@@ -58,3 +58,6 @@ describe 'basic', ->
 
   it 'supports named scale units', (done) ->
     match_expected('named.styl', done)
+    
+  it 'supports device-width media queries', (done) ->
+    match_expected('device.styl', done)
