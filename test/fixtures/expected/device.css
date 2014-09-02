@@ -1,0 +1,16 @@
+.device {
+  color: #f00;
+}
+@media only screen and (max-device-width: 600px) {
+  .device {
+    color: #00f;
+  }
+}
+.not-device {
+  color: #f00;
+}
+@media only screen and (max-width: 600px) {
+  .not-device {
+    color: #00f;
+  }
+}

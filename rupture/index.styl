@@ -8,6 +8,7 @@ rupture = {
   anti-overlap: false
   density-queries: 'dppx' 'webkit' 'moz' 'dpi'
   retina-density: 1.5
+  device-width: false
 }
 
 rupture.scale = 0 (rupture.mobile-cutoff) 600px 800px (rupture.desktop-cutoff)
@@ -96,14 +97,15 @@ between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientati
   -max ?= max
 
   condition = 'only screen'
+  deviceWidth = rupture.device-width ? 'device-' : ''
   unless -min is 0
     -min = -convert-to('em', -min) if rupture.enable-em-breakpoints
     -min = -adjust-overlap(anti-overlap, -min, side: 'min')
-    condition = condition + ' and (min-width: %s)' % (-min)
+    condition = condition + ' and (min-' + deviceWidth + 'width: %s)' % (-min)
   unless -larger-than-scale(max)
     -max = -convert-to('em', -max) if rupture.enable-em-breakpoints
     -max = -adjust-overlap(anti-overlap, -max, side: 'max')
-    condition = condition + ' and (max-width: %s)' % (-max)
+    condition = condition + ' and (max-' + deviceWidth + 'width: %s)' % (-max)
   if orientation
     condition = condition + ' and (orientation: %s)' % (orientation)
   if density
