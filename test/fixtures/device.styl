@@ -1,0 +1,18 @@
+rupture.use-device-width = true
+.device
+  color: red
+  +to(2)
+    color: blue
+rupture.use-device-width = false
+.not-device
+  color: red
+  +to(2)
+    color: blue
+.device-mixin
+  color: red
+  +to(2)
+    color: blue
+    content 'max-width'
+  +to(3, use-device-width: true)
+    color: blue
+    content 'max-device-width'

@@ -8,8 +8,8 @@ rupture = {
   anti-overlap: false
   density-queries: 'dppx' 'webkit' 'moz' 'dpi'
   retina-density: 1.5
+  use-device-width: false
 }
-
 rupture.scale = 0 (rupture.mobile-cutoff) 600px 800px (rupture.desktop-cutoff)
 rupture.scale-names = 'xs' 's' 'm' 'l' 'xl'
 
@@ -82,7 +82,7 @@ rupture.scale-names = 'xs' 's' 'm' 'l' 'xl'
 //   - +between(1, 300px) scale:custom
 //   - +between(200px, 4) custom:scale
 
-between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientation = null)
+between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
 
   if typeof(min) is 'string'
     min = -get-scale-number(min)
@@ -96,14 +96,15 @@ between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientati
   -max ?= max
 
   condition = 'only screen'
+  use-device-width = use-device-width ? 'device-' : ''
   unless -min is 0
     -min = -convert-to('em', -min) if rupture.enable-em-breakpoints
     -min = -adjust-overlap(anti-overlap, -min, side: 'min')
-    condition = condition + ' and (min-width: %s)' % (-min)
+    condition = condition + ' and (min-' + use-device-width + 'width: %s)' % (-min)
   unless -larger-than-scale(max)
     -max = -convert-to('em', -max) if rupture.enable-em-breakpoints
     -max = -adjust-overlap(anti-overlap, -max, side: 'max')
-    condition = condition + ' and (max-width: %s)' % (-max)
+    condition = condition + ' and (max-' + use-device-width + 'width: %s)' % (-max)
   if orientation
     condition = condition + ' and (orientation: %s)' % (orientation)
   if density
@@ -114,32 +115,32 @@ between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientati
   @media condition
     {block}
 
-at(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null)
-  +between(scale-point, scale-point, anti-overlap, density, orientation)
+at(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
+  +between(scale-point, scale-point, anti-overlap, density, orientation, use-device-width)
     {block}
 
-from(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null)
-  +between(scale-point, length(rupture.scale), anti-overlap, density, orientation)
+from(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
+  +between(scale-point, length(rupture.scale), anti-overlap, density, orientation, use-device-width)
     {block}
 
 above = from
 
-to(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null)
-  +between(1, scale-point, anti-overlap, density, orientation)
+to(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
+  +between(1, scale-point, anti-overlap, density, orientation, use-device-width)
     {block}
 
 below = to
 
-mobile(anti-overlap = rupture.anti-overlap, density = null, orientation = null)
-  +below(rupture.mobile-cutoff, anti-overlap, density, orientation)
+mobile(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
+  +below(rupture.mobile-cutoff, anti-overlap, density, orientation, use-device-width)
     {block}
 
-tablet(anti-overlap = rupture.anti-overlap, density = null, orientation = null)
-  +between(rupture.mobile-cutoff, rupture.desktop-cutoff, anti-overlap, density, orientation)
+tablet(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
+  +between(rupture.mobile-cutoff, rupture.desktop-cutoff, anti-overlap, density, orientation, use-device-width)
     {block}
 
-desktop(anti-overlap = rupture.anti-overlap, density = null, orientation = null)
-  +above(rupture.desktop-cutoff, anti-overlap, density, orientation)
+desktop(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
+  +above(rupture.desktop-cutoff, anti-overlap, density, orientation, use-device-width)
     {block}
 
 density(density, orientation = null)
