@@ -90,10 +90,10 @@ To create a media query that only targets devices with a high pixel density, eit
 ```
 
 ##### `rupture.retina-density`
-Value which controls the minimum density of a device considered to have a retina display. Defaults to 1.5. This value will be used when you call the `retina()` mixin or pass `density: 'retina'` as a keyword argument to any of the width mixins. For example, to target retina tablets, you can do:
+Value which controls the minimum density of a device considered to have a retina display. Defaults to 1.5. This value will be used when you call the `retina()` mixin or pass `density: retina` as a keyword argument to any of the width mixins. For example, to target retina tablets, you can do:
 
 ```js
-+tablet(density: 'retina') // equivalent to +tablet(density: 1.5) unless you change rupture.retina-density
++tablet(density: retina) // equivalent to +tablet(density: 1.5) unless you change rupture.retina-density
 ```
 
 
@@ -139,7 +139,7 @@ When the screen size is between 1050px (defined by `rupture.desktop-cutoff`) and
 When the screen size is 1050px (defined by `rupture.desktop-cutoff`) or more, the styles in the block will take effect.
 
 ##### `+density(value)`
-When the device has a pixel density of at least the given `value`, the styles in the block will take effect. The `value` should be a unitless pixel ratio number such as `1`, `1.5`, or `2`. The `value` can also be the string `'retina'`, in which case the `rupture.retina-density` variable will be used.
+When the device has a pixel density of at least the given `value`, the styles in the block will take effect. The `value` should be a unitless pixel ratio number such as `1`, `1.5`, or `2`. The `value` can also be  `retina`, in which case the `rupture.retina-density` variable will be used.
 
 ##### `+retina()`
 When the device has a pixel density of over `rupture.retina-density` (defaults to 1.5), the styles in the block will take effect.

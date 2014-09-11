@@ -12,7 +12,14 @@ rupture = {
 }
 rupture.scale = 0 (rupture.mobile-cutoff) 600px 800px (rupture.desktop-cutoff)
 rupture.scale-names = 'xs' 's' 'm' 'l' 'xl'
-
+-is-string(val)
+  if typeof(val) is not 'unit'
+    if val is a 'string' or val is a 'ident'
+      true
+    else
+      false
+  else
+    false
 -get-scale-number(scale-name)
   for list-item, i in rupture.scale-names
     if list-item is scale-name
@@ -56,6 +63,9 @@ rupture.scale-names = 'xs' 's' 'm' 'l' 'xl'
   return n >= 0
 
 -density-queries(density)
+  if typeof(density) is not 'unit'
+    if not -is-string(density)
+      density = '%s' % density
   density = rupture.retina-density if density is 'retina'
   queries = ()
   for query in rupture.density-queries
@@ -68,6 +78,8 @@ rupture.scale-names = 'xs' 's' 'm' 'l' 'xl'
     else if query is 'ratio'
       push(queries, '(min-device-pixel-ratio: %s)' % (density))
     else if query is 'dpi'
+      if -is-string(density)
+        density=convert(density)
       push(queries, '(min-resolution: %sdpi)' % (round(density * 96, 1)))
     else if query is 'dppx'
       push(queries, '(min-resolution: %sdppx)' % (density))
@@ -83,11 +95,13 @@ rupture.scale-names = 'xs' 's' 'm' 'l' 'xl'
 //   - +between(200px, 4) custom:scale
 
 between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
-
-  if typeof(min) is 'string'
+  if -is-string(orientation)
+    orientation = convert(orientation)
+  if -is-string(density)
+    density = convert(density)
+  if -is-string(min)
     min = -get-scale-number(min)
-
-  if typeof(max) is 'string'
+  if -is-string(max)
     max = -get-scale-number(max)
 
   -min = rupture.scale[min - 1] unless -is-zero(min) or (not -on-scale(min))
@@ -116,30 +130,54 @@ between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientati
     {block}
 
 at(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
+  if -is-string(orientation)
+    orientation = convert(orientation)
+  if -is-string(density)
+    density = convert(density)
   +between(scale-point, scale-point, anti-overlap, density, orientation, use-device-width)
     {block}
 
 from(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
+  if -is-string(orientation)
+    orientation = convert(orientation)
+  if -is-string(density)
+    density = convert(density)
   +between(scale-point, length(rupture.scale), anti-overlap, density, orientation, use-device-width)
     {block}
 
 above = from
 
 to(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
+  if -is-string(orientation)
+    orientation = convert(orientation)
+  if -is-string(density)
+    density = convert(density)
   +between(1, scale-point, anti-overlap, density, orientation, use-device-width)
     {block}
 
 below = to
 
 mobile(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
+  if -is-string(orientation)
+    orientation = convert(orientation)
+  if -is-string(density)
+    density = convert(density)
   +below(rupture.mobile-cutoff, anti-overlap, density, orientation, use-device-width)
     {block}
 
 tablet(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
+  if -is-string(orientation)
+    orientation = convert(orientation)
+  if -is-string(density)
+    density = convert(density)
   +between(rupture.mobile-cutoff, rupture.desktop-cutoff, anti-overlap, density, orientation, use-device-width)
     {block}
 
 desktop(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
+  if -is-string(orientation)
+    orientation = convert(orientation)
+  if -is-string(density)
+    density = convert(density)
   +above(rupture.desktop-cutoff, anti-overlap, density, orientation, use-device-width)
     {block}
 
@@ -161,6 +199,8 @@ retina(orientation = null)
     {block}
 
 landscape(density = null)
+  if -is-string(density)
+    density = convert(density)
   if density
     +pixel-ratio(density, orientation: landscape)
       {block}
@@ -169,6 +209,8 @@ landscape(density = null)
       {block}
 
 portrait(density = null)
+  if -is-string(density)
+    density = convert(density)
   if density
     +pixel-ratio(density, orientation: portrait)
       {block}
