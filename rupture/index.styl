@@ -137,7 +137,7 @@ at(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation
   +between(scale-point, scale-point, anti-overlap, density, orientation, use-device-width)
     {block}
 
-from(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
+from-width(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
   if -is-string(orientation)
     orientation = convert(orientation)
   if -is-string(density)
@@ -145,9 +145,9 @@ from(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientati
   +between(scale-point, length(rupture.scale), anti-overlap, density, orientation, use-device-width)
     {block}
 
-above = from
+above = from-width
 
-to(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
+to-width(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
   if -is-string(orientation)
     orientation = convert(orientation)
   if -is-string(density)
@@ -155,7 +155,7 @@ to(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation
   +between(1, scale-point, anti-overlap, density, orientation, use-device-width)
     {block}
 
-below = to
+below = to-width
 
 mobile(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
   if -is-string(orientation)

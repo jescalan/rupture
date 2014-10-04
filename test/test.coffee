@@ -23,10 +23,10 @@ describe 'basic', ->
   it 'at', (done) ->
     match_expected('at.styl', done)
 
-  it 'from', (done) ->
+  it 'from-width', (done) ->
     match_expected('from.styl', done)
 
-  it 'to', (done) ->
+  it 'to-width', (done) ->
     match_expected('to.styl', done)
 
   it 'above', (done) ->
@@ -58,6 +58,6 @@ describe 'basic', ->
 
   it 'supports named scale units', (done) ->
     match_expected('named.styl', done)
-    
+
   it 'supports device-width media queries', (done) ->
     match_expected('device.styl', done)
