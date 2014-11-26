@@ -44,6 +44,9 @@ describe 'basic', ->
   it 'desktop', (done) ->
     match_expected('desktop.styl', done)
 
+  it 'hd', (done) ->
+    match_expected('hd.styl', done)
+
   it 'retina', (done) ->
     match_expected('retina.styl', done)
 
