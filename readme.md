@@ -43,22 +43,22 @@ Pixel value where the `hd` mixin kicks in, meaning a wider desktop-screen.
 A list of values that you can reference by index in most of the mixins listed below. This works exactly like [breakpoint-slicer](https://github.com/lolmaus/breakpoint-slicer). Default looks like this:
 
 ```js
-rupture.scale = 0 400px 600px 800px 1050px
+rupture.scale = 0 400px 600px 800px 1050px 1800px
 ```
 
 ##### `rupture.scale-names`
 A list of strings you can reference that correspond to their index location in `rupture.scale`. This works exactly like [breakpoint-slicer](https://github.com/lolmaus/breakpoint-slicer#calling-slices-by-names-rather-than-numbers)
 
 ```
-rupture.scale =        0        400px       600px      800px        1050px
+rupture.scale =        0        400px       600px      800px        1050px     1800px
 
-//                     └────┬────┘ └────┬────┘ └────┬────┘ └────┬────┘ └────┬────
-// Slice numbers:           1           2           3           4           5
-rupture.scale-names:       'xs'        's'         'm'         'l'         'xl'
+//                     └────┬────┘ └────┬────┘ └────┬────┘ └────┬────┘ └────┬────┘ └────┬────
+// Slice numbers:           1           2           3           4           5           6
+rupture.scale-names:       'xs'        's'         'm'         'l'         'xl'        'hd'
 ```
 
 ```js
-rupture.scale-names = 'xs' 's' 'm' 'l' 'xl'
+rupture.scale-names = 'xs' 's' 'm' 'l' 'xl' 'hd'
 ```
 
 ##### `rupture.enable-em-breakpoints`
