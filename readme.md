@@ -36,6 +36,9 @@ Pixel value where the `mobile` mixin kicks in, also the lower bound of the `tabl
 ##### `rupture.desktop-cutoff`
 Pixel value where the `desktop` mixin kicks in, also the upper bound of the `tablet` mixin.
 
+##### `rupture.hd-cutoff`
+Pixel value where the `hd` mixin kicks in, meaning a wider desktop-screen.
+
 ##### `rupture.scale`
 A list of values that you can reference by index in most of the mixins listed below. This works exactly like [breakpoint-slicer](https://github.com/lolmaus/breakpoint-slicer). Default looks like this:
 
@@ -138,6 +141,9 @@ When the screen size is between 1050px (defined by `rupture.desktop-cutoff`) and
 ##### `+desktop()`
 When the screen size is 1050px (defined by `rupture.desktop-cutoff`) or more, the styles in the block will take effect.
 
+##### `+hd()`
+When the screen size is 1800px (defined by `rupture.hd-cutoff`) or more, the styles in the block will take effect.
+
 ##### `+density(value)`
 When the device has a pixel density of at least the given `value`, the styles in the block will take effect. The `value` should be a unitless pixel ratio number such as `1`, `1.5`, or `2`. The `value` can also be  `retina`, in which case the `rupture.retina-density` variable will be used.
 
@@ -234,6 +240,8 @@ If you don't want to enable anti-overlapping globally, you can enable or disable
     font-weight normal
   +desktop(anti-overlap: true)
     font-style italic
+  +hd(anti-overlap: true)
+    font-style oblique
 ```
 
 The `anti-overlap` offset list may contain positive or negative values. Positive values will increase the media query's `min-width` argument, while negative values will decrease the `max-width` argument.
