@@ -3,6 +3,7 @@ base-font-size ?= 16px
 rupture = {
   mobile-cutoff: 400px
   desktop-cutoff: 1050px
+  hd-cutoff: 1800px
   enable-em-breakpoints: false
   base-font-size: base-font-size
   anti-overlap: false
@@ -10,8 +11,8 @@ rupture = {
   retina-density: 1.5
   use-device-width: false
 }
-rupture.scale = 0 (rupture.mobile-cutoff) 600px 800px (rupture.desktop-cutoff)
-rupture.scale-names = 'xs' 's' 'm' 'l' 'xl'
+rupture.scale = 0 (rupture.mobile-cutoff) 600px 800px (rupture.desktop-cutoff) (rupture.hd-cutoff)
+rupture.scale-names = 'xs' 's' 'm' 'l' 'xl' 'hd'
 -is-string(val)
   if typeof(val) is not 'unit'
     if val is a 'string' or val is a 'ident'
@@ -179,6 +180,14 @@ desktop(anti-overlap = rupture.anti-overlap, density = null, orientation = null,
   if -is-string(density)
     density = convert(density)
   +above(rupture.desktop-cutoff, anti-overlap, density, orientation, use-device-width)
+    {block}
+
+hd(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
+  if -is-string(orientation)
+    orientation = convert(orientation)
+  if -is-string(density)
+    density = convert(density)
+  +above(rupture.hd-cutoff, anti-overlap, density, orientation, use-device-width)
     {block}
 
 density(density, orientation = null)
