@@ -6,6 +6,8 @@ Rupture
 
 Simple media queries for stylus.
 
+> **Note:** This project is in early development, and versioning is a little different. [Read this](http://markup.im/#q4_cRZ1Q) for more details.
+
 ```styl
 .test
   color: red
