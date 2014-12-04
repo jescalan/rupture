@@ -107,7 +107,7 @@ defaults to `false`
 Also you can pass it as named argument to override behavior of rupture.use-device-width value:
 
 ```js
-+to(2, use-device-width: true)
++to-width(2, use-device-width: true)
 ```
 
 ### Mixins
@@ -117,13 +117,13 @@ So there are two "categories" of mixins that are a part of rupture. The first is
 ##### `+above(measure)`
 When the screen size is _above_ the provided [measure](#what-is-a-measure), the styles in the block will take effect.
 
-##### `+from(measure)`
+##### `+from-width(measure)`
 Alias of `above`. Styles take effect from the provided [measure](#what-is-a-measure) and above.
 
 ##### `+below(measure)`
 When the screen size is _below_ the provided [measure](#what-is-a-measure), the styles in the block will take effect.
 
-##### `+to(measure)`
+##### `+to-width(measure)`
 Alias of `below`. Styles take effect from zero up to the provided [measure](#what-is-a-measure).
 
 ##### `+between(measure, measure)`
@@ -228,11 +228,11 @@ If you don't want to enable anti-overlapping globally, you can enable or disable
     text-align right
   +at(3, anti-overlap: false)
     text-align left
-  +from(4, anti-overlap: 1px)
+  +from-width(4, anti-overlap: 1px)
     text-align justify
-  +to(4, anti-overlap: 0.0625em)
+  +to-width(4, anti-overlap: 0.0625em)
     border 1px
-  +from(5, anti-overlap: 0.0625rem)
+  +from-width(5, anti-overlap: 0.0625rem)
     text-align justify
   +tablet(anti-overlap: 1px 0.0625em 0.0625rem)
     font-weight bold
