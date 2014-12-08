@@ -1,4 +1,5 @@
 base-font-size ?= 16px
+suppress-responsive ?= false
 
 rupture = {
   mobile-cutoff: 400px
@@ -110,25 +111,29 @@ between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientati
   -min ?= min
   -max ?= max
 
-  condition = 'only screen'
-  use-device-width = use-device-width ? 'device-' : ''
-  unless -min is 0
-    -min = -convert-to('em', -min) if rupture.enable-em-breakpoints
-    -min = -adjust-overlap(anti-overlap, -min, side: 'min')
-    condition = condition + ' and (min-' + use-device-width + 'width: %s)' % (-min)
-  unless -larger-than-scale(max)
-    -max = -convert-to('em', -max) if rupture.enable-em-breakpoints
-    -max = -adjust-overlap(anti-overlap, -max, side: 'max')
-    condition = condition + ' and (max-' + use-device-width + 'width: %s)' % (-max)
-  if orientation
-    condition = condition + ' and (orientation: %s)' % (orientation)
-  if density
-    conditions = ()
-    for query in -density-queries(density)
-      push(conditions, condition + ' and %s' % (query))
-    condition = join(', ', conditions)
-  @media condition
-    {block}
+  if suppress-responsive
+    if not (density or -max or orientation)
+      {block}
+  else
+    condition = 'only screen'
+    use-device-width = use-device-width ? 'device-' : ''
+    unless -min is 0
+      -min = -convert-to('em', -min) if rupture.enable-em-breakpoints
+      -min = -adjust-overlap(anti-overlap, -min, side: 'min')
+      condition = condition + ' and (min-' + use-device-width + 'width: %s)' % (-min)
+    unless -larger-than-scale(max)
+      -max = -convert-to('em', -max) if rupture.enable-em-breakpoints
+      -max = -adjust-overlap(anti-overlap, -max, side: 'max')
+      condition = condition + ' and (max-' + use-device-width + 'width: %s)' % (-max)
+    if orientation
+      condition = condition + ' and (orientation: %s)' % (orientation)
+    if density
+      conditions = ()
+      for query in -density-queries(density)
+        push(conditions, condition + ' and %s' % (query))
+      condition = join(', ', conditions)
+    @media condition
+      {block}
 
 at(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width)
   if -is-string(orientation)
@@ -191,15 +196,16 @@ hd(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-
     {block}
 
 density(density, orientation = null)
-  conditions = ()
-  for query in -density-queries(density)
-    condition = 'only screen and %s' % (query)
-    if orientation
-      condition = condition + ' and (orientation: %s)' % (orientation)
-    push(conditions, condition)
-  condition = join(', ', conditions)
-  @media condition
-    {block}
+  if not suppress-responsive
+    conditions = ()
+    for query in -density-queries(density)
+      condition = 'only screen and %s' % (query)
+      if orientation
+        condition = condition + ' and (orientation: %s)' % (orientation)
+      push(conditions, condition)
+    condition = join(', ', conditions)
+    @media condition
+      {block}
 
 pixel-ratio = density
 
@@ -208,21 +214,23 @@ retina(orientation = null)
     {block}
 
 landscape(density = null)
-  if -is-string(density)
-    density = convert(density)
-  if density
-    +pixel-ratio(density, orientation: landscape)
-      {block}
-  else
-    @media only screen and (orientation: landscape)
-      {block}
+  if not suppress-responsive
+    if -is-string(density)
+      density = convert(density)
+    if density
+      +pixel-ratio(density, orientation: landscape)
+        {block}
+    else
+      @media only screen and (orientation: landscape)
+        {block}
 
 portrait(density = null)
-  if -is-string(density)
-    density = convert(density)
-  if density
-    +pixel-ratio(density, orientation: portrait)
-      {block}
-  else
-    @media only screen and (orientation: portrait)
-      {block}
+  if not suppress-responsive
+    if -is-string(density)
+      density = convert(density)
+    if density
+      +pixel-ratio(density, orientation: portrait)
+        {block}
+    else
+      @media only screen and (orientation: portrait)
+        {block}
