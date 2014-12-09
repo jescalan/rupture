@@ -23,14 +23,23 @@ describe 'basic', ->
   it 'at', (done) ->
     match_expected('at.styl', done)
 
+  it 'at-suppress-responsive', (done) ->
+    match_expected('at-suppress-responsive.styl', done)
+
   it 'from-width', (done) ->
     match_expected('from.styl', done)
+
+  it 'from-width-suppress-responsive', (done) ->
+    match_expected('from-suppress-responsive.styl', done)
 
   it 'to-width', (done) ->
     match_expected('to.styl', done)
 
   it 'above', (done) ->
     match_expected('above.styl', done)
+
+  it 'above-supress-responsive', (done) ->
+    match_expected('above-suppress-responsive.styl', done)
 
   it 'below', (done) ->
     match_expected('below.styl', done)
@@ -43,6 +52,9 @@ describe 'basic', ->
 
   it 'desktop', (done) ->
     match_expected('desktop.styl', done)
+
+  it 'desktop-suppress-responsive', (done) ->
+    match_expected('desktop-suppress-responsive.styl', done)
 
   it 'hd', (done) ->
     match_expected('hd.styl', done)
