@@ -112,6 +112,30 @@ Also you can pass it as named argument to override behavior of rupture.use-devic
 +to-width(2, use-device-width: true)
 ```
 
+
+#### `rupture.suppress-modern-queries`
+Value which suppresses media queries that only work in modern browsers. This makes it possible to produce a secondary stylesheet for use with legacy versions of IE.
+
+This is useful because it makes it easier to overcomes the challenge of providing fallback behavior for legacy versions of IE when performing mobile-first development.
+
+Alternative stylesheet can be automatically selected using IE conditional comments:
+```html
+<!--[if lt IE 9]>
+<link rel="stylesheet" href="/css/main-legacy.min.css"/>
+<![endif]-->
+<!--[if gt IE 8]> -->
+<link rel="stylesheet" href="/css/main.min.css"/>
+<!-- <![endif]-->
+```
+
+You can automate this process by generating the alternative stylesheet using a bootstrap like the following:
+```stylus
+// main-legacy.styl
+suppress-modern-queries = true
+
+@import 'main'
+```
+
 ### Mixins
 
 So there are two "categories" of mixins that are a part of rupture. The first is a very basic set designed to simply shorten and sweeten standard media queries, and the second is a very close port of the fantastic [breakpoint-slicer](https://github.com/lolmaus/breakpoint-slicer) library, which can be used almost as a grid. We'll go through these in order.
