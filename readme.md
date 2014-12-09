@@ -113,7 +113,7 @@ Also you can pass it as named argument to override behavior of rupture.use-devic
 ```
 
 
-#### `rupture.suppress-modern-queries`
+##### `rupture.suppress-modern-queries`
 Value which suppresses media queries that only work in modern browsers. This makes it possible to produce a secondary stylesheet for use with legacy versions of IE.
 
 This is useful because it makes it easier to overcomes the challenge of providing fallback behavior for legacy versions of IE when performing mobile-first development.
