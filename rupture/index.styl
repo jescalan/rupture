@@ -1,5 +1,5 @@
 base-font-size ?= 16px
-suppress-responsive ?= false
+suppress-modern-queries ?= false
 
 rupture = {
   mobile-cutoff: 400px
@@ -111,7 +111,7 @@ between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientati
   -min ?= min
   -max ?= max
 
-  if suppress-responsive
+  if suppress-modern-queries
     if not (density or -max or orientation)
       {block}
   else
@@ -196,7 +196,7 @@ hd(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-
     {block}
 
 density(density, orientation = null)
-  if not suppress-responsive
+  if not suppress-modern-queries
     conditions = ()
     for query in -density-queries(density)
       condition = 'only screen and %s' % (query)
@@ -214,7 +214,7 @@ retina(orientation = null)
     {block}
 
 landscape(density = null)
-  if not suppress-responsive
+  if not suppress-modern-queries
     if -is-string(density)
       density = convert(density)
     if density
@@ -225,7 +225,7 @@ landscape(density = null)
         {block}
 
 portrait(density = null)
-  if not suppress-responsive
+  if not suppress-modern-queries
     if -is-string(density)
       density = convert(density)
     if density
