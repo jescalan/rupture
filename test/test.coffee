@@ -23,14 +23,23 @@ describe 'basic', ->
   it 'at', (done) ->
     match_expected('at.styl', done)
 
+  it 'at-rasterise-media-queries', (done) ->
+    match_expected('at-rasterise-media-queries.styl', done)
+
   it 'from-width', (done) ->
     match_expected('from.styl', done)
+
+  it 'from-width-rasterise-media-queries', (done) ->
+    match_expected('from-rasterise-media-queries.styl', done)
 
   it 'to-width', (done) ->
     match_expected('to.styl', done)
 
   it 'above', (done) ->
     match_expected('above.styl', done)
+
+  it 'above-supress-responsive', (done) ->
+    match_expected('above-rasterise-media-queries.styl', done)
 
   it 'below', (done) ->
     match_expected('below.styl', done)
@@ -43,6 +52,9 @@ describe 'basic', ->
 
   it 'desktop', (done) ->
     match_expected('desktop.styl', done)
+
+  it 'desktop-rasterise-media-queries', (done) ->
+    match_expected('desktop-rasterise-media-queries.styl', done)
 
   it 'hd', (done) ->
     match_expected('hd.styl', done)
