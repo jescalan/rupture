@@ -113,7 +113,7 @@ Also you can pass it as named argument to override behavior of rupture.use-devic
 ```
 
 
-##### `rupture.suppress-modern-queries`
+##### `rupture.rasterise-media-queries`
 Value which suppresses media queries that only work in modern browsers. This makes it possible to produce a secondary stylesheet for use with legacy versions of IE.
 
 This is useful because it makes it easier to overcomes the challenge of providing fallback behavior for legacy versions of IE when performing mobile-first development.
@@ -131,7 +131,7 @@ Alternative stylesheet can be automatically selected using IE conditional commen
 You can automate this process by generating the alternative stylesheet using a bootstrap like the following:
 ```stylus
 // main-legacy.styl
-suppress-modern-queries = true
+rasterise-media-queries = true
 
 @import 'main'
 ```

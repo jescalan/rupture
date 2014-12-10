@@ -1,8 +1,8 @@
 base-font-size ?= 16px
-suppress-modern-queries ?= false
+rasterise-media-queries ?= false
 
 rupture = {
-  suppress-modern-queries: suppress-modern-queries
+  rasterise-media-queries: rasterise-media-queries
   mobile-cutoff: 400px
   desktop-cutoff: 1050px
   hd-cutoff: 1800px
@@ -112,7 +112,7 @@ between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientati
   -min ?= min
   -max ?= max
 
-  if (rupture.suppress-modern-queries)
+  if (rupture.rasterise-media-queries)
     if not (density or -max or orientation)
       {block}
   else
@@ -197,7 +197,7 @@ hd(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-
     {block}
 
 density(density, orientation = null)
-  if not (rupture.suppress-modern-queries)
+  if not (rupture.rasterise-media-queries)
     conditions = ()
     for query in -density-queries(density)
       condition = 'only screen and %s' % (query)
@@ -215,7 +215,7 @@ retina(orientation = null)
     {block}
 
 landscape(density = null)
-  if not (rupture.suppress-modern-queries)
+  if not (rupture.rasterise-media-queries)
     if -is-string(density)
       density = convert(density)
     if density
@@ -226,7 +226,7 @@ landscape(density = null)
         {block}
 
 portrait(density = null)
-  if not (rupture.suppress-modern-queries)
+  if not (rupture.rasterise-media-queries)
     if -is-string(density)
       density = convert(density)
     if density
