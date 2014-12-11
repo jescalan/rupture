@@ -231,7 +231,7 @@ rupture.enable-em-breakpoints = true
 
 ### Scale overlap
 
-You can prevent scale slices from overlapping with neighbouring slices by setting the [`rupture.anti-overlap`][#enable-anti-overlap] variable. This variable can contain a list of offset values for different units, which will be applied to your media queries so they do not overlap. The offset value(s) can be positive or negative, indicating how they should affect the media query arguments. If you provide a single value such as `1px` but you are using em breakpoints, Rupture can convert the offset to the correct unit based on the `rupture.base-font-size` variable.
+You can prevent scale slices from overlapping with neighbouring slices by setting the [`rupture.anti-overlap`](#enable-anti-overlap) variable. This variable can contain a list of offset values for different units, which will be applied to your media queries so they do not overlap. The offset value(s) can be positive or negative, indicating how they should affect the media query arguments. If you provide a single value such as `1px` but you are using em breakpoints, Rupture can convert the offset to the correct unit based on the `rupture.base-font-size` variable.
 
 Alternatively, you can set `rupture.anti-overlap` to `true` or any falsy value, which are equivalent to `1px` and `0px`, respectively. Here are some examples:
 
@@ -336,6 +336,39 @@ rupture.enable-em-breakpoints = true
 ```
 
 More examples can be found in [`tests/overlap.styl`](test/fixtures/overlap.styl).
+
+### Fallback Classes
+
+Every Rupture mixin accepts an optional `fallback-class` argument that makes it
+easy to augment behavior for browsers that do not support media queries. For example
+the following code will produce the commented result below:
+
+```
+.ui-element
+  color: blue
+  +above(500px, fallback-class: '.lt-ie9')
+    color: orange
+
+/**
+ * .ui-element {
+ *   color: #00f;
+ * }
+ * @media screen and (min-width: 500px) {
+ *   .ui-element {
+ *     color: #ffa500;
+ *   }
+ * }
+ * .lt-ie9 .ui-element {
+ *   color: #ffa500;
+ * }
+ */
+```
+
+While this is a very straightforward way to create fallbacks, do note that the
+user would have to download the extra bytes of CSS even if they use a modern
+browser. If you want an alternative method that will enable you to serve
+separate stylesheets to those users, thus saving transferred bytes, please
+have a look at [`rupture.rasterise-media-queries`](#rupturerasterise-media-queries)
 
 ### What is a "measure"?
 
