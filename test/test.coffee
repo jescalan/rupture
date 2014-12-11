@@ -76,3 +76,6 @@ describe 'basic', ->
 
   it 'supports device-width media queries', (done) ->
     match_expected('device.styl', done)
+
+  it 'supports fallback classes', (done) ->
+    match_expected('fallback-classes.styl', done)

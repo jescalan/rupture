@@ -1,0 +1,80 @@
+// +between()
+.test-between
+  color: red
+  +between(500px, 700px, fallback-class: '.old-ie')
+    color: blue
+  +between(0, 1, fallback-class: '.old-ie')
+    color: lime
+  +between(2, 4, fallback-class: '.old-ie')
+    color: white
+  +between(2, 600px, fallback-class: '.old-ie')
+    color: black
+  +between(0, 500px, fallback-class: '.old-ie')
+    color: #eee
+  +between(200px, length(rupture.scale), fallback-class: '.old-ie')
+    color: #ccc
+
+// +at()
+.test-at
+  color: red
+  +at(1, fallback-class: '.old-ie')
+    color: white
+  +at(2, fallback-class: '.old-ie')
+    color: blue
+
+// +above()
+.test-above
+  color: red
+  +above(500px, fallback-class: '.old-ie')
+    color: blue
+
+// +below()
+.test-below
+  color: red
+  +below(500px, fallback-class: '.old-ie')
+    color: blue
+
+// +mobile()
+.test-mobile
+  color: red
+  +mobile(fallback-class: '.old-ie')
+    color: blue
+
+
+// +tablet()
+.test-tablet
+  color: red
+  +tablet(fallback-class: '.old-ie')
+    color: blue
+
+
+// +desktop()
+.test-desktop
+  color: red
+  +desktop(fallback-class: '.old-ie')
+    color: blue
+
+
+// +hd()
+.test-hd
+  color: red
+  +hd(fallback-class: '.old-ie')
+    color: blue
+
+// +retina()
+.test-retina
+  color: red
+  +retina(fallback-class: '.old-ie')
+    color: blue
+
+// +landscape()
+.test-landscape
+  color: red
+  +landscape(fallback-class: '.old-ie')
+    color: blue
+
+// +portrait()
+.test-portrait
+  color: red
+  +portrait(fallback-class: '.old-ie')
+    color: blue
