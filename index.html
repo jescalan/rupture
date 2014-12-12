@@ -22,11 +22,11 @@ stylus.renderFile(&#39;example.styl&#39;, { use: rupture() })
 <h3 id="mixins">The Mixins</h3><p>So there are two &ldquo;categories&rdquo; of mixins that are a part of rupture. The first is a very basic set designed to simply shorten and sweeten standard media queries, and the second is a very close port of the fantastic <a href="https://github.com/lolmaus/breakpoint-slicer">breakpoint-slicer</a> library, which can be used almost as a grid. We&#39;ll go through these in order.</p>
 <h5 id="-above-measure-"><code>+above(measure)</code></h5>
 <p>When the screen size is <em>above</em> the provided <a href="#measure">measure</a>, the styles in the block will take effect.</p>
-<h5 id="-from-measure-"><code>+from(measure)</code></h5>
+<h5 id="-from-measure-"><code>+from-width(measure)</code></h5>
 <p>Alias of <code>above</code>. Styles take effect from the provided <a href="#measure">measure</a> and above.</p>
 <h5 id="-below-measure-"><code>+below(measure)</code></h5>
 <p>When the screen size is <em>below</em> the provided <a href="#measure">measure</a>, the styles in the block will take effect.</p>
-<h5 id="-to-measure-"><code>+to(measure)</code></h5>
+<h5 id="-to-measure-"><code>+to-width(measure)</code></h5>
 <p>Alias of <code>below</code>. Styles take effect from zero up to the provided <a href="#measure">measure</a>.</p>
 <h5 id="-between-measure-measure-"><code>+between(measure, measure)</code></h5>
 <p>When the screen size is <em>between</em> the two provided <a href="#measure">measure</a>, the styles in the block will take effect.</p>
