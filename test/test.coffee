@@ -1,4 +1,4 @@
-should = require 'should'
+chai = require 'chai'
 path = require 'path'
 fs = require 'fs'
 stylus = require 'stylus'
@@ -6,13 +6,15 @@ parse = require 'css-parse'
 rupture = require '../'
 test_path = path.join(__dirname, 'fixtures')
 
+should = chai.should()
+
 match_expected = (file, done) ->
   stylus(fs.readFileSync(path.join(test_path, file), 'utf8'))
     .use(rupture())
     .render (err, css) ->
       if err then return done(err)
       expected = fs.readFileSync(path.join(test_path, 'expected', file.replace('.styl', '.css')), 'utf8')
-      parse(css).should.eql(parse(expected))
+      JSON.stringify(parse(css)).should.eql(JSON.stringify(parse(expected)))
       done()
 
 describe 'basic', ->
