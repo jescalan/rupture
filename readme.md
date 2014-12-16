@@ -140,6 +140,8 @@ rasterise-media-queries = true
 
 So there are two "categories" of mixins that are a part of rupture. The first is a very basic set designed to simply shorten and sweeten standard media queries, and the second is a very close port of the fantastic [breakpoint-slicer](https://github.com/lolmaus/breakpoint-slicer) library, which can be used almost as a grid. We'll go through these in order.
 
+By default measurements that are provided to `+above`, `+below`, `+between` and their aliases are inclusive. For instance, this means that `+between(300, 500)` will satisfy the range of screens `width >= 300 and width <= 500`. This behaviour can be controlled by adjusting the value of [anti-overlap](#scale-overlap).
+
 ##### `+above(measure)`
 When the screen size is _above_ the provided [measure](#what-is-a-measure), the styles in the block will take effect.
 
