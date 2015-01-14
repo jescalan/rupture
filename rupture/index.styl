@@ -7,9 +7,11 @@
 // conditionally assign common globals
 base-font-size          ?= 16px
 rasterise-media-queries ?= false
+rupture-no-conflict     ?= false
 
 // base settings
-rupture = {
+rupture ?= {
+  no-conflict             : rupture-no-conflict
   rasterise-media-queries : rasterise-media-queries
   mobile-cutoff           : 400px
   desktop-cutoff          : 1050px
@@ -207,7 +209,7 @@ ensure-fallback-class(selected, class, block = block)
 // creates a media query that targets a range between two specified measures
 // @type BlockMixin
 // @api public
-between(
+rupture-between(
   min              = null,
   max              = null,
   anti-overlap     = rupture.anti-overlap,
@@ -256,7 +258,7 @@ between(
 // surrounding a specified index on the scale
 // @type BlockMixin
 // @api public
-at(
+rupture-at(
   scale-point      = null,
   anti-overlap     = rupture.anti-overlap,
   density          = null,
@@ -267,7 +269,7 @@ at(
 )
   orientation = -convert-string-to-node(orientation)
   density     = -convert-string-to-node(density)
-  between(
+  rupture-between(
     scale-point,
     scale-point,
     anti-overlap,
@@ -281,7 +283,7 @@ at(
 // creates a media query that targets anything above a specified measure
 // @type BlockMixin
 // @api public
-from-width(
+rupture-above(
   scale-point      = null,
   anti-overlap     = rupture.anti-overlap,
   density          = null,
@@ -292,7 +294,7 @@ from-width(
 )
   orientation = -convert-string-to-node(orientation)
   density     = -convert-string-to-node(density)
-  between(
+  rupture-between(
     scale-point,
     length(rupture.scale),
     anti-overlap,
@@ -306,7 +308,7 @@ from-width(
 // creates a media query that targets anything below a specified measure
 // @type BlockMixin
 // @api public
-to-width(
+rupture-below(
   scale-point      = null,
   anti-overlap     = rupture.anti-overlap,
   density          = null,
@@ -317,7 +319,7 @@ to-width(
 )
   orientation = -convert-string-to-node(orientation)
   density     = -convert-string-to-node(density)
-  between(
+  rupture-between(
     1,
     scale-point,
     anti-overlap,
@@ -331,7 +333,7 @@ to-width(
 // creates a media query that targets everything below the mobile cutoff measure
 // @type BlockMixin
 // @api public
-mobile(
+rupture-mobile(
   anti-overlap     = rupture.anti-overlap,
   density          = null,
   orientation      = null,
@@ -341,7 +343,7 @@ mobile(
 )
   orientation = -convert-string-to-node(orientation)
   density     = -convert-string-to-node(density)
-  below(
+  rupture-below(
     rupture.mobile-cutoff,
     anti-overlap,
     density,
@@ -355,7 +357,7 @@ mobile(
 // desktop cutoff measures
 // @type BlockMixin
 // @api public
-tablet(
+rupture-tablet(
   anti-overlap     = rupture.anti-overlap,
   density          = null,
   orientation      = null,
@@ -365,7 +367,7 @@ tablet(
 )
   orientation = -convert-string-to-node(orientation)
   density     = -convert-string-to-node(density)
-  between(
+  rupture-between(
     rupture.mobile-cutoff,
     rupture.desktop-cutoff,
     anti-overlap,
@@ -380,7 +382,7 @@ tablet(
 // measure
 // @type BlockMixin
 // @api public
-desktop(
+rupture-desktop(
   anti-overlap     = rupture.anti-overlap,
   density          = null,
   orientation      = null,
@@ -390,7 +392,7 @@ desktop(
 )
   orientation = -convert-string-to-node(orientation)
   density     = -convert-string-to-node(density)
-  above(
+  rupture-above(
     rupture.desktop-cutoff,
     anti-overlap,
     density,
@@ -403,7 +405,7 @@ desktop(
 // creates a media query that targets everything above the HD cutoff measure
 // @type BlockMixin
 // @api public
-hd(
+rupture-hd(
   anti-overlap     = rupture.anti-overlap,
   density          = null,
   orientation      = null,
@@ -413,7 +415,7 @@ hd(
 )
   orientation = -convert-string-to-node(orientation)
   density     = -convert-string-to-node(density)
-  above(
+  rupture-above(
     rupture.hd-cutoff,
     anti-overlap,
     density,
@@ -426,7 +428,7 @@ hd(
 // creates a media query that targets a specific screen density
 // @type BlockMixin
 // @api public
-density(
+rupture-density(
   density        = null,
   orientation    = null,
   fallback-class = null,
@@ -447,17 +449,17 @@ density(
 // a quick shorthand for retina density media queries
 // @type BlockMixin
 // @api public
-retina(
+rupture-retina(
   orientation    = null,
   fallback-class = null,
   block          = block
 )
-  density('retina', orientation, fallback-class, block)
+  rupture-density('retina', orientation, fallback-class, block)
 
 // creates a media query that targets landscape orientation
 // @type BlockMixin
 // @api public
-landscape(
+rupture-landscape(
   density        = null,
   fallback-class = null,
   block          = block
@@ -465,7 +467,7 @@ landscape(
   if not (rupture.rasterise-media-queries)
     density = -convert-string-to-node(density)
     if density
-      pixel-ratio(density, orientation: landscape, fallback-class, block)
+      rupture-density(density, orientation: landscape, fallback-class, block)
     else
       @media only screen and (orientation: landscape)
         {block}
@@ -474,7 +476,7 @@ landscape(
 // creates a media query that targets portrait orientation
 // @type BlockMixin
 // @api public
-portrait(
+rupture-portrait(
   density        = null,
   fallback-class = null,
   block          = block
@@ -482,13 +484,31 @@ portrait(
   if not (rupture.rasterise-media-queries)
     density = -convert-string-to-node(density)
     if density
-      pixel-ratio(density, orientation: portrait, fallback-class, block)
+      rupture-density(density, orientation: portrait, fallback-class, block)
     else
       @media only screen and (orientation: portrait)
         {block}
       ensure-fallback-class(selector(), fallback-class, block)
 
 // aliases
-pixel-ratio = density
-below       = to-width
-above       = from-width
+rupture-pixel-ratio = rupture-density
+rupture-to-width    = rupture-below
+rupture-from-width  = rupture-above
+
+// no-conflict aliases
+if not rupture.no-conflict
+  define('between', rupture-between)
+  define('at', rupture-at)
+  define('below', rupture-below)
+  define('above', rupture-above)
+  define('to-width', rupture-to-width)
+  define('from-width', rupture-from-width)
+  define('mobile', rupture-mobile)
+  define('tablet', rupture-tablet)
+  define('desktop', rupture-desktop)
+  define('hd', rupture-hd)
+  define('density', rupture-density)
+  define('pixel-ratio', rupture-pixel-ratio)
+  define('retina', rupture-retina)
+  define('portrait', rupture-portrait)
+  define('landscape', rupture-landscape)
