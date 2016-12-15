@@ -1,27 +1,27 @@
 .hello {
   color: #f00;
 }
-@media only screen and (min-width: 400px) and (max-width: 1050px) {
+@media (only screen and (min-width: 400px) and (max-width: 1050px)) {
   .hello {
     color: #fff;
   }
 }
-@media only screen and (max-width: 400px) {
+@media (only screen and (max-width: 400px)) {
   .hello {
     color: #00f;
   }
 }
-@media only screen and (min-width: 600px) {
+@media (only screen and (min-width: 600px)) {
   .hello {
     color: #000;
   }
 }
-@media only screen and (max-width: 400px) {
+@media (only screen and (max-width: 400px)) {
   .hello {
     color: #0f0;
   }
 }
-@media only screen and (min-width: 1050px) and (max-width: 1800px) {
+@media (only screen and (min-width: 1050px) and (max-width: 1800px)) {
   .hello {
     color: #ccc;
   }

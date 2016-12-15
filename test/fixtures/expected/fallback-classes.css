@@ -1,7 +1,7 @@
 .test-between {
   color: #f00;
 }
-@media only screen and (min-width: 500px) and (max-width: 700px) {
+@media (only screen and (min-width: 500px) and (max-width: 700px)) {
   .test-between {
     color: #00f;
   }
@@ -9,7 +9,7 @@
 .old-ie .test-between {
   color: #00f;
 }
-@media only screen and (max-width: 400px) {
+@media (only screen and (max-width: 400px)) {
   .test-between {
     color: #0f0;
   }
@@ -17,7 +17,7 @@
 .old-ie .test-between {
   color: #0f0;
 }
-@media only screen and (min-width: 400px) and (max-width: 1050px) {
+@media (only screen and (min-width: 400px) and (max-width: 1050px)) {
   .test-between {
     color: #fff;
   }
@@ -25,7 +25,7 @@
 .old-ie .test-between {
   color: #fff;
 }
-@media only screen and (min-width: 400px) and (max-width: 600px) {
+@media (only screen and (min-width: 400px) and (max-width: 600px)) {
   .test-between {
     color: #000;
   }
@@ -33,7 +33,7 @@
 .old-ie .test-between {
   color: #000;
 }
-@media only screen and (max-width: 500px) {
+@media (only screen and (max-width: 500px)) {
   .test-between {
     color: #eee;
   }
@@ -41,7 +41,7 @@
 .old-ie .test-between {
   color: #eee;
 }
-@media only screen and (min-width: 200px) {
+@media (only screen and (min-width: 200px)) {
   .test-between {
     color: #ccc;
   }
@@ -52,7 +52,7 @@
 .test-at {
   color: #f00;
 }
-@media only screen and (max-width: 400px) {
+@media (only screen and (max-width: 400px)) {
   .test-at {
     color: #fff;
   }
@@ -60,7 +60,7 @@
 .old-ie .test-at {
   color: #fff;
 }
-@media only screen and (min-width: 400px) and (max-width: 600px) {
+@media (only screen and (min-width: 400px) and (max-width: 600px)) {
   .test-at {
     color: #00f;
   }
@@ -71,7 +71,7 @@
 .test-above {
   color: #f00;
 }
-@media only screen and (min-width: 500px) {
+@media (only screen and (min-width: 500px)) {
   .test-above {
     color: #00f;
   }
@@ -82,7 +82,7 @@
 .test-below {
   color: #f00;
 }
-@media only screen and (max-width: 500px) {
+@media (only screen and (max-width: 500px)) {
   .test-below {
     color: #00f;
   }
@@ -93,7 +93,7 @@
 .test-mobile {
   color: #f00;
 }
-@media only screen and (max-width: 400px) {
+@media (only screen and (max-width: 400px)) {
   .test-mobile {
     color: #00f;
   }
@@ -104,7 +104,7 @@
 .test-tablet {
   color: #f00;
 }
-@media only screen and (min-width: 400px) and (max-width: 1050px) {
+@media (only screen and (min-width: 400px) and (max-width: 1050px)) {
   .test-tablet {
     color: #00f;
   }
@@ -115,7 +115,7 @@
 .test-desktop {
   color: #f00;
 }
-@media only screen and (min-width: 1050px) {
+@media (only screen and (min-width: 1050px)) {
   .test-desktop {
     color: #00f;
   }
@@ -126,7 +126,7 @@
 .test-hd {
   color: #f00;
 }
-@media only screen and (min-width: 1800px) {
+@media (only screen and (min-width: 1800px)) {
   .test-hd {
     color: #00f;
   }
@@ -137,7 +137,7 @@
 .test-retina {
   color: #f00;
 }
-@media only screen and (min-resolution: 1.5dppx), only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi) {
+@media (only screen and (min-resolution: 1.5dppx), only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi)) {
   .test-retina {
     color: #00f;
   }
@@ -148,7 +148,7 @@
 .test-landscape {
   color: #f00;
 }
-@media only screen and (orientation: landscape) {
+@media (only screen and (orientation: landscape)) {
   .test-landscape {
     color: #00f;
   }
@@ -159,7 +159,7 @@
 .test-portrait {
   color: #f00;
 }
-@media only screen and (orientation: portrait) {
+@media (only screen and (orientation: portrait)) {
   .test-portrait {
     color: #00f;
   }
