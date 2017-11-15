@@ -1,0 +1,11 @@
+.hello {
+  color: #f00;
+}
+@media (only screen and (hover: hover)) {
+  .hello {
+    color: #00f;
+  }
+  .hello:hover {
+    color: #f00;
+  }
+}

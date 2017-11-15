@@ -192,6 +192,10 @@ When the viewport is taller than it is wide, the styles in the block will take e
 +mobile(orientation: portrait)
 ```
 
+##### `+hover()`
+The hover media feature is used to query the user’s ability to hover over elements on the page with the primary pointing device.
+
+
 ### PX to EM unit conversion
 
 It is a popular opinion that using `em` units for media queries is a good practice, and [for good reason](http://blog.cloudfour.com/the-ems-have-it-proportional-media-queries-ftw/).

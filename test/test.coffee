@@ -81,3 +81,6 @@ describe 'basic', ->
 
   it 'supports fallback classes', (done) ->
     match_expected('fallback-classes.styl', done)
+
+  it 'hover', (done) ->
+    match_expected('hover.styl', done)
