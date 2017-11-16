@@ -1,6 +1,5 @@
 base-font-size ?= 16px
 rasterise-media-queries ?= false
-rupture-no-conflict ?= false
 
 rupture = {
   rasterise-media-queries: rasterise-media-queries
@@ -104,7 +103,7 @@ create-fallback-class(selected, class)
 //   - +between(1, 300px) scale:custom
 //   - +between(200px, 4) custom:scale
 
-rupture-between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
+between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
   selected = selector()
 
   if -is-string(orientation)
@@ -142,157 +141,127 @@ rupture-between(min, max, anti-overlap = rupture.anti-overlap, density = null, o
       for query in -density-queries(density)
         push(conditions, condition + ' and %s' % (query))
       condition = join(', ', conditions)
-    @media ({condition})
+    @media condition
       {block}
   if fallback-class
     +create-fallback-class(selected, fallback-class)
       {block}
 
-between = rupture-between unless rupture-no-conflict
-
-rupture-at(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
+at(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
   if -is-string(orientation)
     orientation = convert(orientation)
   if -is-string(density)
     density = convert(density)
-  +rupture-between(scale-point, scale-point, anti-overlap, density, orientation, use-device-width, fallback-class)
+  +between(scale-point, scale-point, anti-overlap, density, orientation, use-device-width, fallback-class)
     {block}
 
-at = rupture-at unless rupture-no-conflict
-
-rupture-from-width(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
+from-width(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
   if -is-string(orientation)
     orientation = convert(orientation)
   if -is-string(density)
     density = convert(density)
-  +rupture-between(scale-point, length(rupture.scale), anti-overlap, density, orientation, use-device-width, fallback-class)
+  +between(scale-point, length(rupture.scale), anti-overlap, density, orientation, use-device-width, fallback-class)
     {block}
 
-from-width = rupture-from-width unless rupture-no-conflict
+above = from-width
 
-rupture-above = rupture-from-width
-above = rupture-from-width unless rupture-no-conflict
-
-rupture-to-width(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
+to-width(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
   if -is-string(orientation)
     orientation = convert(orientation)
   if -is-string(density)
     density = convert(density)
-  +rupture-between(1, scale-point, anti-overlap, density, orientation, use-device-width, fallback-class)
+  +between(1, scale-point, anti-overlap, density, orientation, use-device-width, fallback-class)
     {block}
 
-to-width = rupture-to-width unless rupture-no-conflict
+below = to-width
 
-rupture-below = rupture-to-width
-below = rupture-to-width unless rupture-no-conflict
-
-rupture-mobile(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
+mobile(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
   if -is-string(orientation)
     orientation = convert(orientation)
   if -is-string(density)
     density = convert(density)
-  +rupture-below(rupture.mobile-cutoff, anti-overlap, density, orientation, use-device-width, fallback-class)
+  +below(rupture.mobile-cutoff, anti-overlap, density, orientation, use-device-width, fallback-class)
     {block}
 
-mobile = rupture-mobile unless rupture-no-conflict
-
-rupture-tablet(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
+tablet(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
   if -is-string(orientation)
     orientation = convert(orientation)
   if -is-string(density)
     density = convert(density)
-  +rupture-between(rupture.mobile-cutoff, rupture.desktop-cutoff, anti-overlap, density, orientation, use-device-width, fallback-class)
+  +between(rupture.mobile-cutoff, rupture.desktop-cutoff, anti-overlap, density, orientation, use-device-width, fallback-class)
     {block}
 
-tablet = rupture-tablet unless rupture-no-conflict
-
-rupture-desktop(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
+desktop(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
   if -is-string(orientation)
     orientation = convert(orientation)
   if -is-string(density)
     density = convert(density)
-  +rupture-above(rupture.desktop-cutoff, anti-overlap, density, orientation, use-device-width, fallback-class)
+  +above(rupture.desktop-cutoff, anti-overlap, density, orientation, use-device-width, fallback-class)
     {block}
 
-desktop = rupture-desktop unless rupture-no-conflict
-
-rupture-hd(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
+hd(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
   if -is-string(orientation)
     orientation = convert(orientation)
   if -is-string(density)
     density = convert(density)
-  +rupture-above(rupture.hd-cutoff, anti-overlap, density, orientation, use-device-width, fallback-class)
+  +above(rupture.hd-cutoff, anti-overlap, density, orientation, use-device-width, fallback-class)
     {block}
 
-hd = rupture-hd unless rupture-no-conflict
-
-rupture-density(density, orientation = null, fallback-class = null)
+density(density, orientation = null, fallback-class = null)
   selected = selector()
   if not (rupture.rasterise-media-queries)
     conditions = ()
     for query in -density-queries(density)
       condition = 'only screen and %s' % (query)
       if orientation
-        condition = condition + ' and (orientation: %s)' % (unquote(orientation))
+        condition = condition + ' and (orientation: %s)' % (orientation)
       push(conditions, condition)
     condition = join(', ', conditions)
-    @media ({condition})
+    @media condition
       {block}
     if fallback-class
       +create-fallback-class(selected, fallback-class)
         {block}
 
-density = rupture-density unless rupture-no-conflict
+pixel-ratio = density
 
-rupture-pixel-ratio = rupture-density
-pixel-ratio = rupture-density unless rupture-no-conflict
-
-rupture-retina(orientation = null, fallback-class = null)
-  +rupture-density('retina', orientation, fallback-class)
+retina(orientation = null, fallback-class = null)
+  +density('retina', orientation, fallback-class)
     {block}
 
-retina = rupture-retina unless rupture-no-conflict
-
-rupture-landscape(density = null, fallback-class = null)
+landscape(density = null, fallback-class = null)
   selected = selector()
   if not (rupture.rasterise-media-queries)
     if -is-string(density)
       density = convert(density)
     if density
-      +rupture-pixel-ratio(density, orientation: s('landscape'), fallback-class)
+      +pixel-ratio(density, orientation: landscape, fallback-class)
         {block}
     else
-      condition = "only screen and (orientation: landscape)";
-      @media ({condition})
+      @media only screen and (orientation: landscape)
         {block}
       if fallback-class
         +create-fallback-class(selected, fallback-class)
           {block}
 
-landscape = rupture-landscape unless rupture-no-conflict
-
-rupture-portrait(density = null, fallback-class = null)
+portrait(density = null, fallback-class = null)
   selected = selector()
   if not (rupture.rasterise-media-queries)
     if -is-string(density)
       density = convert(density)
     if density
-      +rupture-pixel-ratio(density, orientation: s('portrait'), fallback-class)
+      +pixel-ratio(density, orientation: portrait, fallback-class)
         {block}
     else
-      condition = "only screen and (orientation: portrait)";
-      @media ({condition})
+      @media only screen and (orientation: portrait)
         {block}
       if fallback-class
         +create-fallback-class(selected, fallback-class)
           {block}
-
-portrait = rupture-portrait unless rupture-no-conflict
-
 
 rupture-hover(density = null, orientation = null, fallback-class = null)
   condition = "only screen and (hover: hover)";
   @media ({condition})
     {block}
 
-hover = rupture-hover unless rupture-no-conflict
+hover = rupture-hover

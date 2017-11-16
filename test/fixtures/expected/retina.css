@@ -1,57 +1,57 @@
 .hello {
   color: #f00;
 }
-@media (only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi)) {
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi) {
   .hello {
     color: #00f;
   }
 }
-@media (only screen and (-webkit-min-device-pixel-ratio: 3), only screen and (min-resolution: 288dpi)) {
+@media only screen and (-webkit-min-device-pixel-ratio: 3), only screen and (min-resolution: 288dpi) {
   .hello {
     color: #800000;
   }
 }
-@media (only screen and (min-width: 500px) and (-webkit-min-device-pixel-ratio: 2), only screen and (min-width: 500px) and (min-resolution: 192dpi)) {
+@media only screen and (min-width: 500px) and (-webkit-min-device-pixel-ratio: 2), only screen and (min-width: 500px) and (min-resolution: 192dpi) {
   .hello {
     color: #0f0;
   }
 }
-@media (only screen and (min-width: 400px) and (max-width: 600px) and (-webkit-min-device-pixel-ratio: 2), only screen and (min-width: 400px) and (max-width: 600px) and (min-resolution: 192dpi)) {
+@media only screen and (min-width: 400px) and (max-width: 600px) and (-webkit-min-device-pixel-ratio: 2), only screen and (min-width: 400px) and (max-width: 600px) and (min-resolution: 192dpi) {
   .hello {
     color: #0ff;
   }
 }
-@media (only screen and (max-width: 500px) and (-webkit-min-device-pixel-ratio: 2), only screen and (max-width: 500px) and (min-resolution: 192dpi)) {
+@media only screen and (max-width: 500px) and (-webkit-min-device-pixel-ratio: 2), only screen and (max-width: 500px) and (min-resolution: 192dpi) {
   .hello {
     color: #f0f;
   }
 }
-@media (only screen and (min-width: 400px) and (max-width: 1050px) and (-webkit-min-device-pixel-ratio: 2), only screen and (min-width: 400px) and (max-width: 1050px) and (min-resolution: 192dpi)) {
+@media only screen and (min-width: 400px) and (max-width: 1050px) and (-webkit-min-device-pixel-ratio: 2), only screen and (min-width: 400px) and (max-width: 1050px) and (min-resolution: 192dpi) {
   .hello {
     color: #ff0;
   }
 }
-@media (only screen and (min-width: 1050px) and (-webkit-min-device-pixel-ratio: 1), only screen and (min-width: 1050px) and (min-resolution: 96dpi)) {
+@media only screen and (min-width: 1050px) and (-webkit-min-device-pixel-ratio: 1), only screen and (min-width: 1050px) and (min-resolution: 96dpi) {
   .hello {
     color: #000;
   }
 }
-@media (only screen and (min-width: 400px) and (-webkit-min-device-pixel-ratio: 1.25), only screen and (min-width: 400px) and (min-resolution: 120dpi)) {
+@media only screen and (min-width: 400px) and (-webkit-min-device-pixel-ratio: 1.25), only screen and (min-width: 400px) and (min-resolution: 120dpi) {
   .hello {
     color: #fff;
   }
 }
-@media (only screen and (max-width: 400px) and (-webkit-min-device-pixel-ratio: 1.3), only screen and (max-width: 400px) and (min-resolution: 124.8dpi)) {
+@media only screen and (max-width: 400px) and (-webkit-min-device-pixel-ratio: 1.3), only screen and (max-width: 400px) and (min-resolution: 124.8dpi) {
   .hello {
     color: #008000;
   }
 }
-@media (only screen and (min-width: 400px) and (max-width: 1050px) and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-width: 400px) and (max-width: 1050px) and (min-resolution: 144dpi)) {
+@media only screen and (min-width: 400px) and (max-width: 1050px) and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-width: 400px) and (max-width: 1050px) and (min-resolution: 144dpi) {
   .hello {
     color: #808080;
   }
 }
-@media (only screen and (max-width: 600px) and (-webkit-min-device-pixel-ratio: 2), only screen and (max-width: 600px) and (min-resolution: 192dpi)) {
+@media only screen and (max-width: 600px) and (-webkit-min-device-pixel-ratio: 2), only screen and (max-width: 600px) and (min-resolution: 192dpi) {
   .hello {
     color: #000080;
   }

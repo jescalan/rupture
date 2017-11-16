@@ -1,52 +1,52 @@
 .thing {
   color: #f00;
 }
-@media (only screen and (max-width: 30em)) {
+@media only screen and (max-width: 30em) {
   .thing {
     display: block;
   }
 }
-@media (only screen and (min-width: 30em)) {
+@media only screen and (min-width: 30em) {
   .thing {
     display: block;
   }
 }
-@media (only screen and (min-width: 31.25em)) {
+@media only screen and (min-width: 31.25em) {
   .thing {
     display: block;
   }
 }
-@media (only screen and (max-width: 31.25em)) {
+@media only screen and (max-width: 31.25em) {
   .thing {
     display: block;
   }
 }
-@media (only screen and (min-width: 12.5em) and (max-width: 37.5em)) {
+@media only screen and (min-width: 12.5em) and (max-width: 37.5em) {
   .thing {
     display: block;
   }
 }
-@media (only screen and (min-width: 25em) and (max-width: 37.5em)) {
+@media only screen and (min-width: 25em) and (max-width: 37.5em) {
   .thing {
     display: block;
   }
 }
-@media (only screen and (max-width: 25em)) {
+@media only screen and (max-width: 25em) {
   .thing {
     display: block;
   }
 }
-@media (only screen and (min-width: 25em) and (max-width: 65.625em)) {
+@media only screen and (min-width: 25em) and (max-width: 65.625em) {
   .thing {
     display: block;
   }
 }
-@media (only screen and (min-width: 65.625em)) {
+@media only screen and (min-width: 65.625em) {
   .thing {
     display: block;
   }
 }
-@media (only screen and (min-resolution: 1.5dppx), only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi)) {
+@media only screen and (min-resolution: 1.5dppx), only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi) {
   .thing {
     display: block;
   }
