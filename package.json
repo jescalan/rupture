@@ -2,7 +2,7 @@
   "name": "rupture",
   "author": "Jeff Escalante <hello@jenius.me>",
   "description": "simple media queries for stylus",
-  "version": "0.6.1",
+  "version": "0.7.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/jenius/rupture.git"
