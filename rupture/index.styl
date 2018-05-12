@@ -1,37 +1,74 @@
-base-font-size ?= 16px
+//=========================================//
+//                                         //
+// RUPTURE: better breakpoints for Stylus  //
+//                                         //
+//=========================================//
+
+// conditionally assign common globals
+base-font-size          ?= 16px
 rasterise-media-queries ?= false
+rupture-no-conflict     ?= false
 
-rupture = {
-  rasterise-media-queries: rasterise-media-queries
-  mobile-cutoff: 400px
-  desktop-cutoff: 1050px
-  hd-cutoff: 1800px
-  enable-em-breakpoints: false
-  base-font-size: base-font-size
-  anti-overlap: false
-  density-queries: 'dppx' 'webkit' 'moz' 'dpi'
-  retina-density: 1.5
-  use-device-width: false
+// base settings
+rupture ?= {
+  no-conflict             : rupture-no-conflict
+  rasterise-media-queries : rasterise-media-queries
+  mobile-cutoff           : 400px
+  desktop-cutoff          : 1050px
+  hd-cutoff               : 1800px
+  enable-em-breakpoints   : false
+  base-font-size          : base-font-size
+  anti-overlap            : false
+  density-queries         : 'dppx' 'webkit' 'moz' 'dpi'
+  retina-density          : 1.5
+  use-device-width        : false
+  scale                   : ()
+  scale-names             : ()
 }
-rupture.scale = 0 (rupture.mobile-cutoff) 600px 800px (rupture.desktop-cutoff) (rupture.hd-cutoff)
-rupture.scale-names = 'xs' 's' 'm' 'l' 'xl' 'hd'
 
--is-string(val)
-  if typeof(val) is not 'unit'
-    if val is a 'string' or val is a 'ident'
-      true
-    else
-      false
-  else
-    false
+// dictionary map of scale names to scale values
+rupture.scale-map = {
+  'xs' : 0
+  's'  : (rupture.mobile-cutoff)
+  'm'  : 600px
+  'l'  : 800px
+  'xl' : (rupture.desktop-cutoff)
+  'hd' : (rupture.hd-cutoff)
+}
 
+// dynamically split the scale map into separate lists
+for scale-names, scale in rupture.scale-map
+  push(rupture[prop], lookup(prop)) for prop in ('scale' 'scale-names')
+
+// checks if value is string or identifier
+// @type Function
+// @api private
+// @param {Mixed} value - any data type
+// @return {Boolean} - true if value is stringish
+-is-string(value)
+  typeof(value) is not 'unit' and (value is a 'string' or value is a 'ident')
+
+// gets the associated scale measure for a given scale name
+// @type Function
+// @api private
+// @param {String} scale-name - the name of a point on the scale
+// @return {Number|Boolean} - the scale measure or false if one was not found
 -get-scale-number(scale-name)
-  for list-item, i in rupture.scale-names
-    if list-item is scale-name
-      return i + 1
+  return n + 1 if item is scale-name for item, n in rupture.scale-names
   return false
 
--convert-to(to-unit, value, context = rupture.base-font-size)
+// converts from one unit to another unit, e.g. px -> em
+// @type Function
+// @api private
+// @param {String} to-unit - the unit to be converted to
+// @param {Unit} value - the value you want to convert
+// @param {Unit} [context] - the context in which to convert
+// @return {Unit} - the final converted value
+-convert-to(
+  to-unit = null,
+  value   = null,
+  context = rupture.base-font-size
+)
   from-unit = unit(value)
   return value if to-unit is from-unit
   if to-unit in ('em' 'rem')
@@ -40,102 +77,174 @@ rupture.scale-names = 'xs' 's' 'm' 'l' 'xl' 'hd'
   if to-unit is 'px'
     return unit((value * context), 'px')
 
+// checks if a number is a scale measure by assuming that unitless = on scale
+// @type Function
+// @api private
+// @param {Number} - the number to check
+// @return {Boolean} - true if so or false otherwise
 -on-scale(n)
   return unit(n) is ''
 
+// checks if a number is larger than any number on the scale
+// @type Function
+// @api private
+// @param {Number} n - the number to check
+// @return {Boolean} - true if larger than scale, otherwise false
 -larger-than-scale(n)
   return (n > (length(rupture.scale) - 1)) and -on-scale(n)
 
+// simply a functional alias to check if a number is 0
+// @type Function
+// @api private
+// @param {Number} n - the number to check
+// @return {Boolean} - true if the number is 0
 -is-zero(n)
   return n is 0
 
--overlap-shift(anti-overlap, n)
-  shift-unit = unit(n)
+// shifts the given value to account for scale overlap
+// @type Function
+// @api private
+// @param {Boolean} anti-overlap - whether to prevent overlap
+// @param {Number} n - the value
+// @return {Unit} - the newly shifted value
+-overlap-shift(
+  anti-overlap = null,
+  n            = null
+)
+  shift-unit   = unit(n)
   anti-overlap = 0px unless anti-overlap
   anti-overlap = 1px if anti-overlap is true
-  if length(anti-overlap) is 1
-    return -convert-to(shift-unit, anti-overlap)
-  for val in anti-overlap
-    return val if unit(val) is shift-unit
+  return -convert-to(shift-unit, anti-overlap) if length(anti-overlap) is 1
+  return val if unit(val) is shift-unit for val in anti-overlap
 
--adjust-overlap(anti-overlap, n, side = 'min')
+// adjusts size values to account for scale overlap
+// @type Function
+// @api private
+// @param {Boolean} anti-overlap - whether to prevent overlap
+// @param {Number} n - the value
+// @param {String} side - whether this is a "min" or "max" query
+// @return {Number} - the newly adjusted value
+-adjust-overlap(
+  anti-overlap = null,
+  n            = null,
+  side         = 'min'
+)
   -shift = -overlap-shift(anti-overlap, n)
   if (side is 'min' and -shift > 0) or (side is 'max' and -shift < 0)
     n = n + -shift
   return n
 
+// checks if a given number is not negative
+// @type Function
+// @api private
+// @param {Number} n - the number to check
+// @return {Boolean} - true if positive
 -is-positive(n)
   return n >= 0
 
+// normalizes media query densities for different browser vendors
+// @type Function
+// @api private
+// @param {Number} density
+// @return {String} - the normalized queries
 -density-queries(density)
-  if typeof(density) is not 'unit'
-    if not -is-string(density)
-      density = '%s' % density
+  if (typeof(density) is not 'unit') and (not -is-string(density))
+    density = '%s' % density
   density = rupture.retina-density if density is 'retina'
   queries = ()
+  dpr     = 'device-pixel-ratio'
+  query-map = {
+    'webkit': '-webkit-min'
+    'moz'   : 'min--moz'
+    'o'     : '-o-min'
+  }
   for query in rupture.density-queries
-    if query is 'webkit'
-      push(queries, '(-webkit-min-device-pixel-ratio: %s)' % (density))
-    else if query is 'moz'
-      push(queries, '(min--moz-device-pixel-ratio: %s)' % (density))
-    else if query is 'o'
-      push(queries, '(-o-min-device-pixel-ratio: %s/1)' % (density))
-    else if query is 'ratio'
-      push(queries, '(min-device-pixel-ratio: %s)' % (density))
+    if query is 'webkit' or query is 'moz' or query is 'o'
+      density = query is 'o' ? '%s/1' % (density) : density
+      new-query = s('(%s-%s: %s)', s(query-map[query]), s(dpr), density)
+      push(queries, new-query)
     else if query is 'dpi'
-      if -is-string(density)
-        density=convert(density)
+      density = -convert-string-to-node(density)
       push(queries, '(min-resolution: %sdpi)' % (round(density * 96, 1)))
     else if query is 'dppx'
       push(queries, '(min-resolution: %sdppx)' % (density))
   return queries
 
-create-fallback-class(selected, class)
-  /{'' + class + ' ' + selected}
+// converts a string to a stylus node if it is stringish
+// @type Function
+// @api private
+// @param {String} str - the string to convert
+// @return {Node} - the converted node
+-convert-string-to-node(str)
+  return -is-string(str) ? convert(str) : str
+
+// converts a string to a number on the scale
+// @type Function
+// @api private
+// @param {String} str - the string to convert
+// @return {Number} - the converted scale number
+-convert-string-to-scale-number(str)
+  return -is-string(str) ? -get-scale-number(str) : str
+
+// creates a fall back class with the specified block of stylus
+// @type BlockMixin
+// @api private
+// @param {Selector} selected - the CSS selector
+// @param {String} class - the CSS class to create a fallback for
+// @param {Block} block - the block of code
+create-fallback-class(
+  selected = null,
+  class    = null,
+  block    = block
+)
+  /{class + ' ' + selected}
     {block}
 
-// +between(min, max)
-// usage (scale can be mixed with custom values):
-//   - +between(1, 3) scale:scale
-//   - +between(0, 3) 0 width:scale
-//   - +between(200px, 500px) custom:custom
-//   - +between(0, 300px) 0 width:custom
-//   - +between(1, 300px) scale:custom
-//   - +between(200px, 4) custom:scale
+// ensures a fallback class by checking if class is defined
+// @type Mixin
+// @api private
+ensure-fallback-class(selected, class, block = block)
+  create-fallback-class(selected, class, block) if class
 
-between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
-  selected = selector()
+// creates a media query that targets a range between two specified measures
+// @type BlockMixin
+// @api public
+rupture-between(
+  min              = null,
+  max              = null,
+  anti-overlap     = rupture.anti-overlap,
+  density          = null,
+  orientation      = null,
+  use-device-width = rupture.use-device-width,
+  fallback-class   = null,
+  block            = block
+)
+  density     = -convert-string-to-node(density)
+  orientation = -convert-string-to-node(orientation)
 
-  if -is-string(orientation)
-    orientation = convert(orientation)
-  if -is-string(density)
-    density = convert(density)
-  if -is-string(min)
-    min = -get-scale-number(min)
-  if -is-string(max)
-    max = -get-scale-number(max)
+  min = -convert-string-to-scale-number(min)
+  max = -convert-string-to-scale-number(max)
 
-  -min = rupture.scale[min - 1] unless -is-zero(min) or (not -on-scale(min))
-  -max = rupture.scale[max] unless not -on-scale(max)
+  -min  = rupture.scale[min - 1] unless -is-zero(min) or (not -on-scale(min))
+  -max  = rupture.scale[max] unless not -on-scale(max)
   -min ?= min
   -max ?= max
 
   if (rupture.rasterise-media-queries)
-    if not (density or -max or orientation)
-      {block}
+    {block} if not (density or -max or orientation)
   else
-    condition = 'only screen'
+    condition        = 'only screen'
     use-device-width = use-device-width ? 'device-' : ''
     unless -min is 0
       -min = -convert-to('em', -min) if rupture.enable-em-breakpoints
       -min = -adjust-overlap(anti-overlap, -min, side: 'min')
-      condition = condition + ' and (min-' + use-device-width + 'width: %s)' % (-min)
+      condition += ' and (min-' + use-device-width + 'width: %s)' % (-min)
     unless -larger-than-scale(max)
       -max = -convert-to('em', -max) if rupture.enable-em-breakpoints
       -max = -adjust-overlap(anti-overlap, -max, side: 'max')
-      condition = condition + ' and (max-' + use-device-width + 'width: %s)' % (-max)
+      condition += ' and (max-' + use-device-width + 'width: %s)' % (-max)
     if orientation
-      condition = condition + ' and (orientation: %s)' % (orientation)
+      condition += ' and (orientation: %s)' % (orientation)
     if density
       conditions = ()
       for query in -density-queries(density)
@@ -143,72 +252,188 @@ between(min, max, anti-overlap = rupture.anti-overlap, density = null, orientati
       condition = join(', ', conditions)
     @media condition
       {block}
-  if fallback-class
-    +create-fallback-class(selected, fallback-class)
-      {block}
+  ensure-fallback-class(selector(), fallback-class, block)
 
-at(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
-  if -is-string(orientation)
-    orientation = convert(orientation)
-  if -is-string(density)
-    density = convert(density)
-  +between(scale-point, scale-point, anti-overlap, density, orientation, use-device-width, fallback-class)
-    {block}
+// creates a media query that targets the range between the two measures
+// surrounding a specified index on the scale
+// @type BlockMixin
+// @api public
+rupture-at(
+  scale-point      = null,
+  anti-overlap     = rupture.anti-overlap,
+  density          = null,
+  orientation      = null,
+  use-device-width = rupture.use-device-width,
+  fallback-class   = null,
+  block            = block
+)
+  orientation = -convert-string-to-node(orientation)
+  density     = -convert-string-to-node(density)
+  rupture-between(
+    scale-point,
+    scale-point,
+    anti-overlap,
+    density,
+    orientation,
+    use-device-width,
+    fallback-class,
+    block
+  )
 
-from-width(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
-  if -is-string(orientation)
-    orientation = convert(orientation)
-  if -is-string(density)
-    density = convert(density)
-  +between(scale-point, length(rupture.scale), anti-overlap, density, orientation, use-device-width, fallback-class)
-    {block}
+// creates a media query that targets anything above a specified measure
+// @type BlockMixin
+// @api public
+rupture-above(
+  scale-point      = null,
+  anti-overlap     = rupture.anti-overlap,
+  density          = null,
+  orientation      = null,
+  use-device-width = rupture.use-device-width,
+  fallback-class   = null,
+  block            = block
+)
+  orientation = -convert-string-to-node(orientation)
+  density     = -convert-string-to-node(density)
+  rupture-between(
+    scale-point,
+    length(rupture.scale),
+    anti-overlap,
+    density,
+    orientation,
+    use-device-width,
+    fallback-class,
+    block
+  )
 
-above = from-width
+// creates a media query that targets anything below a specified measure
+// @type BlockMixin
+// @api public
+rupture-below(
+  scale-point      = null,
+  anti-overlap     = rupture.anti-overlap,
+  density          = null,
+  orientation      = null,
+  use-device-width = rupture.use-device-width,
+  fallback-class   = null,
+  block            = block
+)
+  orientation = -convert-string-to-node(orientation)
+  density     = -convert-string-to-node(density)
+  rupture-between(
+    1,
+    scale-point,
+    anti-overlap,
+    density,
+    orientation,
+    use-device-width,
+    fallback-class,
+    block
+  )
 
-to-width(scale-point, anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
-  if -is-string(orientation)
-    orientation = convert(orientation)
-  if -is-string(density)
-    density = convert(density)
-  +between(1, scale-point, anti-overlap, density, orientation, use-device-width, fallback-class)
-    {block}
+// creates a media query that targets everything below the mobile cutoff measure
+// @type BlockMixin
+// @api public
+rupture-mobile(
+  anti-overlap     = rupture.anti-overlap,
+  density          = null,
+  orientation      = null,
+  use-device-width = rupture.use-device-width,
+  fallback-class   = null,
+  block            = block
+)
+  orientation = -convert-string-to-node(orientation)
+  density     = -convert-string-to-node(density)
+  rupture-below(
+    rupture.mobile-cutoff,
+    anti-overlap,
+    density,
+    orientation,
+    use-device-width,
+    fallback-class,
+    block
+  )
 
-below = to-width
+// creates a media query that targets everything between the mobile cutoff and
+// desktop cutoff measures
+// @type BlockMixin
+// @api public
+rupture-tablet(
+  anti-overlap     = rupture.anti-overlap,
+  density          = null,
+  orientation      = null,
+  use-device-width = rupture.use-device-width,
+  fallback-class   = null,
+  block            = block
+)
+  orientation = -convert-string-to-node(orientation)
+  density     = -convert-string-to-node(density)
+  rupture-between(
+    rupture.mobile-cutoff,
+    rupture.desktop-cutoff,
+    anti-overlap,
+    density,
+    orientation,
+    use-device-width,
+    fallback-class,
+    block
+  )
 
-mobile(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
-  if -is-string(orientation)
-    orientation = convert(orientation)
-  if -is-string(density)
-    density = convert(density)
-  +below(rupture.mobile-cutoff, anti-overlap, density, orientation, use-device-width, fallback-class)
-    {block}
+// creates a media query that targets everything above the desktop cutoff
+// measure
+// @type BlockMixin
+// @api public
+rupture-desktop(
+  anti-overlap     = rupture.anti-overlap,
+  density          = null,
+  orientation      = null,
+  use-device-width = rupture.use-device-width,
+  fallback-class   = null,
+  block            = block
+)
+  orientation = -convert-string-to-node(orientation)
+  density     = -convert-string-to-node(density)
+  rupture-above(
+    rupture.desktop-cutoff,
+    anti-overlap,
+    density,
+    orientation,
+    use-device-width,
+    fallback-class,
+    block
+  )
 
-tablet(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
-  if -is-string(orientation)
-    orientation = convert(orientation)
-  if -is-string(density)
-    density = convert(density)
-  +between(rupture.mobile-cutoff, rupture.desktop-cutoff, anti-overlap, density, orientation, use-device-width, fallback-class)
-    {block}
+// creates a media query that targets everything above the HD cutoff measure
+// @type BlockMixin
+// @api public
+rupture-hd(
+  anti-overlap     = rupture.anti-overlap,
+  density          = null,
+  orientation      = null,
+  use-device-width = rupture.use-device-width,
+  fallback-class   = null,
+  block            = block
+)
+  orientation = -convert-string-to-node(orientation)
+  density     = -convert-string-to-node(density)
+  rupture-above(
+    rupture.hd-cutoff,
+    anti-overlap,
+    density,
+    orientation,
+    use-device-width,
+    fallback-class,
+    block
+  )
 
-desktop(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
-  if -is-string(orientation)
-    orientation = convert(orientation)
-  if -is-string(density)
-    density = convert(density)
-  +above(rupture.desktop-cutoff, anti-overlap, density, orientation, use-device-width, fallback-class)
-    {block}
-
-hd(anti-overlap = rupture.anti-overlap, density = null, orientation = null, use-device-width = rupture.use-device-width, fallback-class = null)
-  if -is-string(orientation)
-    orientation = convert(orientation)
-  if -is-string(density)
-    density = convert(density)
-  +above(rupture.hd-cutoff, anti-overlap, density, orientation, use-device-width, fallback-class)
-    {block}
-
-density(density, orientation = null, fallback-class = null)
-  selected = selector()
+// creates a media query that targets a specific screen density
+// @type BlockMixin
+// @api public
+rupture-density(
+  density        = null,
+  orientation    = null,
+  fallback-class = null,
+  block          = block
+)
   if not (rupture.rasterise-media-queries)
     conditions = ()
     for query in -density-queries(density)
@@ -219,49 +444,71 @@ density(density, orientation = null, fallback-class = null)
     condition = join(', ', conditions)
     @media condition
       {block}
-    if fallback-class
-      +create-fallback-class(selected, fallback-class)
-        {block}
+    ensure-fallback-class(selector(), fallback-class, block)
 
-pixel-ratio = density
+// a quick shorthand for retina density media queries
+// @type BlockMixin
+// @api public
+rupture-retina(
+  orientation    = null,
+  fallback-class = null,
+  block          = block
+)
+  rupture-density('retina', orientation, fallback-class, block)
 
-retina(orientation = null, fallback-class = null)
-  +density('retina', orientation, fallback-class)
-    {block}
-
-landscape(density = null, fallback-class = null)
-  selected = selector()
+// creates a media query that targets landscape orientation
+// @type BlockMixin
+// @api public
+rupture-landscape(
+  density        = null,
+  fallback-class = null,
+  block          = block
+)
   if not (rupture.rasterise-media-queries)
-    if -is-string(density)
-      density = convert(density)
+    density = -convert-string-to-node(density)
     if density
-      +pixel-ratio(density, orientation: landscape, fallback-class)
-        {block}
+      rupture-density(density, orientation: landscape, fallback-class, block)
     else
       @media only screen and (orientation: landscape)
         {block}
-      if fallback-class
-        +create-fallback-class(selected, fallback-class)
-          {block}
+      ensure-fallback-class(selector(), fallback-class, block)
 
-portrait(density = null, fallback-class = null)
-  selected = selector()
+// creates a media query that targets portrait orientation
+// @type BlockMixin
+// @api public
+rupture-portrait(
+  density        = null,
+  fallback-class = null,
+  block          = block
+)
   if not (rupture.rasterise-media-queries)
-    if -is-string(density)
-      density = convert(density)
+    density = -convert-string-to-node(density)
     if density
-      +pixel-ratio(density, orientation: portrait, fallback-class)
-        {block}
+      rupture-density(density, orientation: portrait, fallback-class, block)
     else
       @media only screen and (orientation: portrait)
         {block}
-      if fallback-class
-        +create-fallback-class(selected, fallback-class)
-          {block}
+      ensure-fallback-class(selector(), fallback-class, block)
 
-rupture-hover(density = null, orientation = null, fallback-class = null)
-  condition = "only screen and (hover: hover)";
-  @media ({condition})
-    {block}
+// aliases
+rupture-pixel-ratio = rupture-density
+rupture-to-width    = rupture-below
+rupture-from-width  = rupture-above
 
-hover = rupture-hover
+// no-conflict aliases
+if not rupture.no-conflict
+  define('between', rupture-between)
+  define('at', rupture-at)
+  define('below', rupture-below)
+  define('above', rupture-above)
+  define('to-width', rupture-to-width)
+  define('from-width', rupture-from-width)
+  define('mobile', rupture-mobile)
+  define('tablet', rupture-tablet)
+  define('desktop', rupture-desktop)
+  define('hd', rupture-hd)
+  define('density', rupture-density)
+  define('pixel-ratio', rupture-pixel-ratio)
+  define('retina', rupture-retina)
+  define('portrait', rupture-portrait)
+  define('landscape', rupture-landscape)
