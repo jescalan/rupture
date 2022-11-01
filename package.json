@@ -11,8 +11,8 @@
     "chai": "1.x",
     "coffee-script": "1.8.x",
     "css-parse": "2.x",
-    "mocha": "2.x",
-    "stylus": "0.49.x"
+    "mocha": "10.x",
+    "stylus": "0.59.x"
   },
   "main": "index.js",
   "scripts": {
